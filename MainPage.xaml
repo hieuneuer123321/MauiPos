@@ -1,0 +1,181 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:MauiAppUIDemo.ViewModels"
+             xmlns:converter="clr-namespace:MauiAppUIDemo.Converter"
+             x:Class="MauiAppUIDemo.MainPage"
+             xmlns:vm="clr-namespace:MauiAppUIDemo.ViewModels"
+             xmlns:models="clr-namespace:MauiAppUIDemo.Models"
+             xmlns:behaviors="clr-namespace:MauiAppUIDemo.Behaviors"
+             x:DataType="vm:MainViewModel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:SubMenuArrowConverter x:Key="SubMenuArrowConverter" />
+            <converter:BoolToArrowConverter x:Key="BoolToArrowConverter" />
+            <converter:IntToBoolConverter x:Key="IntToBoolConverter" />
+            <converter:SelectedItemToBackgroundConverter x:Key="SelectedItemToBackgroundConverter" />
+            <converter:SelectedItemToTextColorConverter x:Key="SelectedItemToTextColorConverter" />
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <!-- Bố cục có 2 hàng: Header (Auto) + Nội dung (*) -->
+    <Grid RowDefinitions="Auto,*" ColumnDefinitions="200,*">
+
+        <!-- ✅ Header: chiếm 2 cột -->
+        <!-- Header Grid -->
+        <Grid Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="#f7f7f7" Padding="20" ColumnDefinitions="*,*">
+            <Label Text="🌐 POS Cafe PTH Start"
+           FontSize="24"
+           FontAttributes="Bold"
+           TextColor="#333333"
+           VerticalOptions="Center"
+           HorizontalOptions="Start" />
+            <Label Text="User Info / Actions"
+           FontSize="16"
+           TextColor="#666666"
+           VerticalOptions="Center"
+           HorizontalOptions="End"
+           Grid.Column="1" />
+        </Grid>
+
+        <!-- BoxView tạo border-bottom dưới header -->
+        <BoxView Grid.Row="1" Grid.ColumnSpan="2"
+         HeightRequest="1"
+         BackgroundColor="#d6d5d5"
+         HorizontalOptions="Fill"
+         VerticalOptions="Start" />
+
+        <!-- ✅ Sidebar giữ nguyên -->
+
+        <!-- Bao quanh CollectionView để có gradient background -->
+     
+
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#052767" Offset="0.0" />
+                    <GradientStop Color="#3a0647" Offset="0.7" />
+                </LinearGradientBrush>
+            </Grid.Background>
+
+            <CollectionView ItemsSource="{Binding MenuItems}"
+                    SelectionMode="None" >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:MenuItemModel">
+                        <StackLayout>
+                            <!-- Menu cha - dùng TapGesture để xử lý -->
+                            <Grid HeightRequest="60" Padding="5" ColumnDefinitions="30,*,30" VerticalOptions="Center">
+                                <Grid.BackgroundColor>
+                                    <MultiBinding Converter="{StaticResource SelectedItemToBackgroundConverter}">
+                                        <Binding Source="{RelativeSource AncestorType={x:Type vm:MainViewModel}}" Path="SelectedMenuItem" />
+                                        <Binding Path="." />
+                                    </MultiBinding>
+                                </Grid.BackgroundColor>
+                                <!-- Icon -->
+                                <Label Text="{Binding Icon}"
+                                       FontSize="22"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center">
+                                    <Label.TextColor>
+                                        <MultiBinding Converter="{StaticResource SelectedItemToTextColorConverter}">
+                                            <Binding Source="{RelativeSource AncestorType={x:Type vm:MainViewModel}}" Path="SelectedMenuItem"/>
+                                            <Binding Path="." />
+                                        </MultiBinding>
+                                    </Label.TextColor>
+                                </Label>
+
+                                <!-- Tiêu đề -->
+                                <Label Text="{Binding Title}"
+                                       Grid.Column="1"
+                                       FontSize="18"
+                                       VerticalOptions="Center"
+                                       Margin="5,0,0,0">
+                                    <Label.TextColor>
+                                        <MultiBinding Converter="{StaticResource SelectedItemToTextColorConverter}">
+                                            <Binding Source="{RelativeSource AncestorType={x:Type vm:MainViewModel}}" Path="SelectedMenuItem"/>
+                                            <Binding Path="." />
+                                        </MultiBinding>
+                                    </Label.TextColor>
+                                </Label>
+
+                                <!-- Nút mũi tên nếu có submenu -->
+                                <Label Grid.Column="2"
+                                       Text="{Binding IsSubMenuVisible, Converter={StaticResource BoolToArrowConverter}}"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"
+                                       TextColor="White"
+                                       FontSize="18"
+                                       IsVisible="{Binding HasSubMenus}" />
+
+                                <!-- Xử lý Tap chọn menu cha -->
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=MenuItemSelectedCommand}"
+                                CommandParameter="{Binding .}" />
+                                </Grid.GestureRecognizers>
+                            </Grid>
+
+                            <!-- Menu con -->
+                            <!-- Thay đổi phần submenu -->
+                            <ContentView HeightRequest="{Binding SubMenuHeight}">
+                                <ContentView.Clip>
+                                    <RectangleGeometry Rect="0,0,300,100" />
+                                </ContentView.Clip>
+
+                                <CollectionView ItemsSource="{Binding SubMenuItems}"
+                                                SelectionMode="Single"
+                                                SelectedItem="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=SelectedMenuItem, Mode=TwoWay}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:MenuItemModel">
+                                            <Grid HeightRequest="50" Padding="35,5,5,5" ColumnDefinitions="30,*" VerticalOptions="Center">
+                                                <Grid.BackgroundColor>
+                                                    <MultiBinding Converter="{StaticResource SelectedItemToBackgroundConverter}">
+                                                        <Binding Source="{RelativeSource AncestorType={x:Type vm:MainViewModel}}" Path="SelectedMenuItem" />
+                                                        <Binding Path="." />
+                                                    </MultiBinding>
+                                                </Grid.BackgroundColor>
+                                                <Label Text="{Binding Icon}"
+                                                        FontSize="18"
+                                                        VerticalOptions="Center"
+                                                        HorizontalOptions="Center">
+                                                    <Label.TextColor>
+                                                        <MultiBinding Converter="{StaticResource SelectedItemToTextColorConverter}">
+                                                            <Binding Source="{RelativeSource AncestorType={x:Type vm:MainViewModel}}" Path="SelectedMenuItem"/>
+                                                            <Binding Path="." />
+                                                        </MultiBinding>
+                                                    </Label.TextColor>
+                                                </Label>
+                                                <Label Text="{Binding Title}"
+                                                        Grid.Column="1"
+                                                        FontSize="16"
+                                                        VerticalOptions="Center"
+                                                        Margin="5,0,0,0">
+                                                    <Label.TextColor>
+                                                        <MultiBinding Converter="{StaticResource SelectedItemToTextColorConverter}">
+                                                            <Binding Source="{RelativeSource AncestorType={x:Type vm:MainViewModel}}" Path="SelectedMenuItem"/>
+                                                            <Binding Path="." />
+                                                        </MultiBinding>
+                                                    </Label.TextColor>
+                                                </Label>
+                                                <Grid.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=MenuItemSelectedCommand}"
+                                                         CommandParameter="{Binding .}" />
+                                                </Grid.GestureRecognizers>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </ContentView>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+
+
+
+        <!-- ✅ Nội dung trang giữ nguyên -->
+        <ContentView Grid.Row="1" Grid.Column="1"
+                     Content="{Binding CurrentView}" />
+    </Grid>
+</ContentPage>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Class="MauiAppUIDemo.Views.SelectToppingPopup"
+    Size="300,400">
+
+    <VerticalStackLayout Padding="20" Spacing="10">
+        <Label Text="Chọn topping" FontSize="20" FontAttributes="Bold" />
+
+        <CollectionView x:Name="ToppingList" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="5" ColumnDefinitions="Auto,*,Auto">
+                        <CheckBox IsChecked="{Binding IsSelected}" />
+                        <Label Text="{Binding Name}" Grid.Column="1" VerticalOptions="Center" />
+                        <Label Text="{Binding Price, StringFormat='(+{0:N0}đ)'}"
+                               Grid.Column="2"
+                               VerticalOptions="Center"
+                               HorizontalOptions="EndAndExpand"
+                               TextColor="Gray" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Text="Xong" Clicked="OnDoneClicked" />
+    </VerticalStackLayout>
+</toolkit:Popup>
