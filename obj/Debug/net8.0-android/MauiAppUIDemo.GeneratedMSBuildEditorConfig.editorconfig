@@ -71,6 +71,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = MauiAppUIDemo.Views.Produc
 build_metadata.AdditionalFiles.TargetPath = Views\ProductListView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\ProductListView.xaml
 
+[C:/Users/vit002/Desktop/MauiDemo/MauiAppUIPOS/MauiAppUIDemo/Views/SelectDiscountPopup.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MauiAppUIDemo.Views.SelectDiscountPopup.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\SelectDiscountPopup.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\SelectDiscountPopup.xaml
+
 [C:/Users/vit002/Desktop/MauiDemo/MauiAppUIPOS/MauiAppUIDemo/Views/SelectToppingPopup.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MauiAppUIDemo.Views.SelectToppingPopup.xaml

@@ -4,6 +4,12 @@
         <name>MauiAppUIDemo</name>
     </assembly>
     <members>
+        <member name="T:MauiAppUIDemo.Models.DiscountCode">
+            <inheritdoc/>
+        </member>
+        <member name="P:MauiAppUIDemo.Models.DiscountCode.IsValidForTotalCached">
+            <inheritdoc cref="F:MauiAppUIDemo.Models.DiscountCode.isValidForTotalCached"/>
+        </member>
         <member name="T:MauiAppUIDemo.Models.MenuItemModel">
             <inheritdoc/>
         </member>
@@ -34,8 +40,11 @@
         <member name="P:MauiAppUIDemo.Models.OrderItem.Quantity">
             <inheritdoc cref="F:MauiAppUIDemo.Models.OrderItem.quantity"/>
         </member>
-        <member name="P:MauiAppUIDemo.Models.OrderItem.Toppings">
-            <inheritdoc cref="F:MauiAppUIDemo.Models.OrderItem.toppings"/>
+        <member name="M:MauiAppUIDemo.Models.OrderItem.OnQuantityChanged(System.Int32,System.Int32)">
+            <summary>Executes the logic for when <see cref="P:MauiAppUIDemo.Models.OrderItem.Quantity"/> just changed.</summary>
+            <param name="oldValue">The previous property value that was replaced.</param>
+            <param name="newValue">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:MauiAppUIDemo.Models.OrderItem.Quantity"/> is changed.</remarks>
         </member>
         <member name="T:MauiAppUIDemo.Models.ToppingOption">
             <inheritdoc/>
@@ -71,6 +80,13 @@
             <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:MauiAppUIDemo.ViewModels.OrderPageViewModel.SelectedDiscount">
+            <inheritdoc cref="F:MauiAppUIDemo.ViewModels.OrderPageViewModel.selectedDiscount"/>
+        </member>
+        <member name="P:MauiAppUIDemo.ViewModels.OrderPageViewModel.DiscountAmountFormatted">
+            <inheritdoc cref="F:MauiAppUIDemo.ViewModels.OrderPageViewModel.discountAmountFormatted"/>
         </member>
         <member name="P:MauiAppUIDemo.ViewModels.OrderPageViewModel.SelectedCategory">
             <inheritdoc cref="F:MauiAppUIDemo.ViewModels.OrderPageViewModel.selectedCategory"/>
@@ -80,6 +96,11 @@
         </member>
         <member name="P:MauiAppUIDemo.ViewModels.OrderPageViewModel.TotalPriceFormatted">
             <inheritdoc cref="F:MauiAppUIDemo.ViewModels.OrderPageViewModel.totalPriceFormatted"/>
+        </member>
+        <member name="M:MauiAppUIDemo.ViewModels.OrderPageViewModel.OnSelectedDiscountChanged(MauiAppUIDemo.Models.DiscountCode)">
+            <summary>Executes the logic for when <see cref="P:MauiAppUIDemo.ViewModels.OrderPageViewModel.SelectedDiscount"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:MauiAppUIDemo.ViewModels.OrderPageViewModel.SelectedDiscount"/> is changed.</remarks>
         </member>
         <member name="M:MauiAppUIDemo.ViewModels.OrderPageViewModel.OnSelectedCategoryChanged(System.String)">
             <summary>Executes the logic for when <see cref="P:MauiAppUIDemo.ViewModels.OrderPageViewModel.SelectedCategory"/> just changed.</summary>
@@ -114,6 +135,12 @@
         </member>
         <member name="P:MauiAppUIDemo.ViewModels.OrderPageViewModel.RemoveItemCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand`1"/> instance wrapping <see cref="M:MauiAppUIDemo.ViewModels.OrderPageViewModel.RemoveItem(MauiAppUIDemo.Models.OrderItem)"/>.</summary>
+        </member>
+        <member name="F:MauiAppUIDemo.ViewModels.OrderPageViewModel.showDiscountPopupCommand">
+            <summary>The backing field for <see cref="P:MauiAppUIDemo.ViewModels.OrderPageViewModel.ShowDiscountPopupCommand"/>.</summary>
+        </member>
+        <member name="P:MauiAppUIDemo.ViewModels.OrderPageViewModel.ShowDiscountPopupCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:MauiAppUIDemo.ViewModels.OrderPageViewModel.ShowDiscountPopupAsync"/>.</summary>
         </member>
         <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Button.TextColorTo(Microsoft.Maui.Controls.Button,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
             <summary>
@@ -241,6 +268,9 @@
             for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
             </summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsValidForTotalCached">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsValidForTotalCached" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsSubMenuVisible">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsSubMenuVisible" generated properties.</summary>
         </member>
@@ -265,9 +295,6 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Quantity">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Quantity" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Toppings">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Toppings" generated properties.</summary>
-        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsSelected">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsSelected" generated properties.</summary>
         </member>
@@ -276,6 +303,12 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CurrentView">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CurrentView" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedDiscount">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedDiscount" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.DiscountAmountFormatted">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "DiscountAmountFormatted" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedCategory">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedCategory" generated properties.</summary>
@@ -291,6 +324,9 @@
             A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instances
             for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
             </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsValidForTotalCached">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsValidForTotalCached" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsSubMenuVisible">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsSubMenuVisible" generated properties.</summary>
@@ -316,9 +352,6 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Quantity">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Quantity" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Toppings">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Toppings" generated properties.</summary>
-        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsSelected">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsSelected" generated properties.</summary>
         </member>
@@ -327,6 +360,12 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CurrentView">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CurrentView" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedDiscount">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedDiscount" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.DiscountAmountFormatted">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "DiscountAmountFormatted" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedCategory">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedCategory" generated properties.</summary>

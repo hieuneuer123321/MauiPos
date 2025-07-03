@@ -1,30 +1,56 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<toolkit:Popup
+<toolkit:Popup 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     x:Class="MauiAppUIDemo.Views.SelectToppingPopup"
-    Size="300,400">
+    Size="500, 450">
 
-    <VerticalStackLayout Padding="20" Spacing="10">
-        <Label Text="Chọn topping" FontSize="20" FontAttributes="Bold" />
+    <Frame Padding="20" BackgroundColor="White" CornerRadius="16" WidthRequest="350">
+        <VerticalStackLayout Spacing="15">
 
-        <CollectionView x:Name="ToppingList" SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Padding="5" ColumnDefinitions="Auto,*,Auto">
-                        <CheckBox IsChecked="{Binding IsSelected}" />
-                        <Label Text="{Binding Name}" Grid.Column="1" VerticalOptions="Center" />
-                        <Label Text="{Binding Price, StringFormat='(+{0:N0}đ)'}"
-                               Grid.Column="2"
-                               VerticalOptions="Center"
-                               HorizontalOptions="EndAndExpand"
-                               TextColor="Gray" />
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+            <!-- Tiêu đề -->
+            <Label Text="Chọn Topping"
+                   FontAttributes="Bold"
+                   FontSize="20"
+                   HorizontalOptions="Center"
+                   TextColor="Black" />
 
-        <Button Text="Xong" Clicked="OnDoneClicked" />
-    </VerticalStackLayout>
+            <!-- Danh sách topping 4 cột -->
+            <CollectionView x:Name="ToppingList"
+                            ItemsLayout="VerticalGrid, 4"
+                            SelectionMode="None"
+                            HeightRequest="280">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame CornerRadius="10"
+                               Padding="5"
+                               Margin="5"
+                               BackgroundColor="{Binding IsSelected, Converter={StaticResource BoolToppingToColorConverter}}"
+                               HasShadow="False">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding BindingContext.ToggleToppingCommand, Source={x:Reference ToppingList}}"
+                                    CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Text="{Binding Name}" FontSize="13" HorizontalOptions="Center" />
+                                <Label Text="{Binding Price, StringFormat='{0:N0}đ'}" FontSize="11" TextColor="Gray" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Nút xác nhận -->
+            <Button Text="✔ Xong"
+                    Clicked="OnDoneClicked"
+                    BackgroundColor="#6C2DC7"
+                    TextColor="White"
+                    FontSize="16"
+                    CornerRadius="12"
+                    HeightRequest="45"
+                    HorizontalOptions="Fill"/>
+        </VerticalStackLayout>
+    </Frame>
 </toolkit:Popup>

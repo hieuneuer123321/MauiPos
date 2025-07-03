@@ -12,4 +12,5 @@ public partial class ToppingOption : ObservableObject
 
     [ObservableProperty]
     private bool isSelected;
+   
 }

@@ -1,24 +1,40 @@
-using CommunityToolkit.Maui.Views;
+﻿using CommunityToolkit.Maui.Views;
 using MauiAppUIDemo.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace MauiAppUIDemo.Views
 {
     public partial class SelectToppingPopup : Popup
     {
-        private List<ToppingOption> options;
+        public ObservableCollection<ToppingOption> Options { get; set; }
+
+        public ICommand ToggleToppingCommand { get; }
 
         public SelectToppingPopup(List<Topping> availableToppings)
         {
             InitializeComponent();
-            options = availableToppings
-                .Select(t => new ToppingOption { Name = t.Name, Price = t.Price })
-                .ToList();
-            ToppingList.ItemsSource = options;
+
+            Options = new ObservableCollection<ToppingOption>(
+                availableToppings.Select(t => new ToppingOption { Name = t.Name, Price = t.Price })
+            );
+
+            ToggleToppingCommand = new Command<ToppingOption>(ToggleTopping);
+
+            BindingContext = this;
+            ToppingList.ItemsSource = Options;
+        }
+
+        private void ToggleTopping(ToppingOption topping)
+        {
+            if (topping != null)
+                topping.IsSelected = !topping.IsSelected; // Gọi SetProperty bên dưới
         }
 
         private void OnDoneClicked(object sender, EventArgs e)
         {
-            var selected = options
+            var selected = Options
                 .Where(x => x.IsSelected)
                 .Select(x => new Topping { Name = x.Name, Price = x.Price })
                 .ToList();
@@ -26,9 +42,6 @@ namespace MauiAppUIDemo.Views
             Close(selected);
         }
 
-        class ToppingOption : Topping
-        {
-            public bool IsSelected { get; set; }
-        }
+     
     }
 }
