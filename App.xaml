@@ -17,6 +17,8 @@
             <converter:BoolToColorConverter x:Key="BoolToColorConverter" />
             <converter:BoolToppingToColorConverter x:Key="BoolToppingToColorConverter" />
             <converter:DiscountSelectedColorConverter x:Key="DiscountSelectedColorConverter" />
+            <converter:GuidNotEmptyConverter x:Key="GuidNotEmptyConverter" />
+            <converter:DiscountDisplayConverter x:Key="DiscountDisplayConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

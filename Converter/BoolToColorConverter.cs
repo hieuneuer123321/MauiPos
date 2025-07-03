@@ -37,25 +37,48 @@ namespace MauiAppUIDemo.Converter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values.Length < 2)
+            if (values.Length < 2 || values[0] is not DiscountCode code || values[1] is not Guid selectedId)
                 return Colors.White;
 
-            var discount = values[0] as DiscountCode;
-            var selectedId = values[1] as Guid?;
+            bool isSelected = code.Id == selectedId;
+            bool isValid = code.Id == Guid.Empty || (code.IsValidNow && code.IsValidForTotalCached);
 
-            if (discount == null || selectedId == null)
-                return Colors.White;
-
-            if (!discount.IsValidForTotalCached)
-                return Color.FromArgb("#eeeeee"); // không hợp lệ
-
-            if (discount.Id == selectedId.Value)
-                return Color.FromArgb("#D1C4E9"); // mã đang được chọn
-
-            return Colors.White; // mặc định
+            if (isSelected)
+                return Color.FromArgb("#E0D7F5"); // màu được chọn
+            else if (!isValid)
+                return Color.FromArgb("#EEEEEE"); // màu xám nhạt cho không hợp lệ
+            else
+                return Colors.White; // mặc định
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+            => throw new NotImplementedException();
+    }
+    public class GuidNotEmptyConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is Guid id)
+                return id != Guid.Empty;
+            return false;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            => throw new NotImplementedException();
+    }
+    public class DiscountDisplayConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is MauiAppUIDemo.Models.DiscountCode discount)
+            {
+                return discount.Id == Guid.Empty ? "Chọn mã giảm giá" : discount.DisplayText;
+            }
+
+            return "Chọn mã giảm giá";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
             => throw new NotImplementedException();
     }
 }

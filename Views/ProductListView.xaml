@@ -17,11 +17,12 @@
         <StackLayout Grid.Column="0" Padding="10">
             <!-- Tìm kiếm và danh mục -->
             <HorizontalStackLayout Spacing="10">
-                <SearchBar Placeholder="Tìm món..." Text="{Binding SearchText}" WidthRequest="180"/>
+                <SearchBar  Placeholder="Tìm món..." Text="{Binding SearchText}" WidthRequest="180"/>
                 <Picker Title="Danh mục"
-                        ItemsSource="{Binding Categories}"
-                        SelectedItem="{Binding SelectedCategory}"
-                        WidthRequest="120" />
+            ItemsSource="{Binding Categories}"
+            SelectedItem="{Binding SelectedCategory}"
+            WidthRequest="120"
+            HorizontalOptions="End" />
             </HorizontalStackLayout>
 
             <CollectionView ItemsSource="{Binding FilteredProducts}"
@@ -66,9 +67,9 @@
                                     <Label Text="{Binding Price, StringFormat='Giá: {0:N0} đ'}"
                                            FontSize="11"
                                            TextColor="#21498c"/>
-                                    <Label Text="{Binding Status, Converter={StaticResource BoolToStatusConverter}}"
+                                    <Label Text="{Binding StatusText}"
                                            FontSize="11"
-                                           TextColor="{Binding Status, Converter={StaticResource BoolToColorConverter}}"/>
+                                           TextColor="{Binding StatusColor}" />
                                 </HorizontalStackLayout>
                             </Grid>
 
@@ -191,9 +192,20 @@
             <Label Text="Chọn mã giảm giá:"
                    FontSize="14"
                    Margin="0,10,0,2" />
+            <Button Text="{Binding SelectedDiscount, Converter={StaticResource DiscountDisplayConverter}}"
+        Command="{Binding ShowDiscountPopupCommand}"
+        BackgroundColor="#6C2DC7"       
+                TextColor="White"
+        FontSize="14"
+        CornerRadius="16"
+        HeightRequest="48"
+        Padding="16,10"
+        HorizontalOptions="Fill">
+                <Button.Shadow>
+                    <Shadow Brush="#44000000" Offset="2,2" Radius="5" Opacity="0.4"/>
+                </Button.Shadow>
+            </Button>
 
-               <Button Text="{Binding SelectedDiscount.DisplayText}"
-Command="{Binding ShowDiscountPopupCommand}" />
 
             <Label Text="{Binding DiscountAmountFormatted}"
                    TextColor="Red"

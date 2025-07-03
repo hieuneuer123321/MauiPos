@@ -2,30 +2,24 @@
 using MauiAppUIDemo.Models;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using Microsoft.Maui.Controls;
 
 namespace MauiAppUIDemo.Views
 {
     public partial class SelectDiscountPopup : Popup
     {
         public ObservableCollection<DiscountCode> DiscountCodes { get; set; }
-
-        public static readonly BindableProperty SelectedDiscountIdProperty =
-            BindableProperty.Create(nameof(SelectedDiscountId), typeof(Guid), typeof(SelectDiscountPopup), Guid.Empty);
-
-        public Guid SelectedDiscountId
-        {
-            get => (Guid)GetValue(SelectedDiscountIdProperty);
-            set => SetValue(SelectedDiscountIdProperty, value);
-        }
-
         public ICommand SelectDiscountCommand { get; }
 
         private DiscountCode selected;
 
+        public Guid SelectedDiscountId { get; set; } = Guid.Empty;
+
+        private readonly double currentTotal;
+
         public SelectDiscountPopup(List<DiscountCode> discounts, double currentTotal)
         {
             InitializeComponent();
+            this.currentTotal = currentTotal;
 
             foreach (var d in discounts)
                 d.IsValidForTotalCached = d.IsValidForTotal(currentTotal);
@@ -34,10 +28,14 @@ namespace MauiAppUIDemo.Views
 
             SelectDiscountCommand = new Command<DiscountCode>((d) =>
             {
-                if (d != null && d.IsValidForTotalCached) // Chỉ cho chọn nếu hợp lệ
+                if (d == null)
+                    return;
+
+                if (d.Id == Guid.Empty || (d.IsValidNow && d.IsValidForTotal(currentTotal)))
                 {
                     selected = d;
                     SelectedDiscountId = d.Id;
+                    OnPropertyChanged(nameof(SelectedDiscountId));
                 }
             });
 

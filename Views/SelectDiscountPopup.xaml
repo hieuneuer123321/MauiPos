@@ -10,12 +10,12 @@
     Size="400,500">
 
     <toolkit:Popup.Resources>
-        <converter:BoolToColorConverter x:Key="BoolToColorConverter" />
+        <converter:GuidNotEmptyConverter x:Key="GuidNotEmptyConverter" />
+        <converter:DiscountSelectedColorConverter x:Key="DiscountSelectedColorConverter" />
     </toolkit:Popup.Resources>
 
     <Border BackgroundColor="White" Padding="20" Stroke="#ccc" StrokeThickness="1" StrokeShape="RoundRectangle 20">
         <VerticalStackLayout Spacing="15">
-
             <Label Text="Chọn mã giảm giá"
                    FontAttributes="Bold"
                    FontSize="18"
@@ -28,32 +28,32 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:DiscountCode">
                         <Frame BorderColor="#ccc"
-               CornerRadius="12"
-               Padding="10"
-               Margin="5">
-                            <!-- ✅ Đặt ở đây -->
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer
-                    Command="{Binding Source={x:Reference RootPopup}, Path=SelectDiscountCommand}"
-                    CommandParameter="{Binding .}" />
-                            </Frame.GestureRecognizers>
-
+                               CornerRadius="12"
+                               Padding="10"
+                               Margin="5">
                             <Frame.BackgroundColor>
                                 <MultiBinding Converter="{StaticResource DiscountSelectedColorConverter}">
                                     <Binding Path="." />
                                     <Binding Source="{x:Reference RootPopup}" Path="SelectedDiscountId" />
                                 </MultiBinding>
                             </Frame.BackgroundColor>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={x:Reference RootPopup}, Path=SelectDiscountCommand}"
+                                    CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
 
                             <VerticalStackLayout>
                                 <Label Text="{Binding Name}" FontAttributes="Bold" />
                                 <Label Text="{Binding Description}" FontSize="13" />
-                                <Label Text="{Binding DisplayText}" FontSize="11" TextColor="Gray" />
+                                <Label Text="{Binding DisplayText}"
+                                       FontSize="11"
+                                       TextColor="Gray"
+                                       IsVisible="{Binding Id, Converter={StaticResource GuidNotEmptyConverter}}" />            
                             </VerticalStackLayout>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-
             </CollectionView>
 
             <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
@@ -68,7 +68,6 @@
                         Clicked="OnApplyClicked"
                         WidthRequest="100" />
             </HorizontalStackLayout>
-
         </VerticalStackLayout>
     </Border>
 </toolkit:Popup>
