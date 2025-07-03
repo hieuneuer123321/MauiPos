@@ -58,7 +58,7 @@ namespace MauiAppUIDemo.ViewModels
                 Id = Guid.Empty,
                 Name = "Không áp dụng",
                 Description = "",
-                IsActive = false
+                IsActive = true
             });
             AvailableDiscounts.Add(new DiscountCode
             {

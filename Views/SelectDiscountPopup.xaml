@@ -6,7 +6,7 @@
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:models="clr-namespace:MauiAppUIDemo.Models"
     xmlns:converter="clr-namespace:MauiAppUIDemo.Converter"
-     x:Name="RootPopup"
+    x:Name="RootPopup"
     Size="400,500">
 
     <toolkit:Popup.Resources>
@@ -27,24 +27,23 @@
                             ItemsSource="{Binding DiscountCodes}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:DiscountCode">
-                        <Frame 
-                               BorderColor="#ccc"
-                               CornerRadius="12"
-                               Padding="10"
-                               Margin="5">
+                        <Frame BorderColor="#ccc"
+               CornerRadius="12"
+               Padding="10"
+               Margin="5">
+                            <!-- ✅ Đặt ở đây -->
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer
+                    Command="{Binding Source={x:Reference RootPopup}, Path=SelectDiscountCommand}"
+                    CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+
                             <Frame.BackgroundColor>
                                 <MultiBinding Converter="{StaticResource DiscountSelectedColorConverter}">
                                     <Binding Path="." />
                                     <Binding Source="{x:Reference RootPopup}" Path="SelectedDiscountId" />
                                 </MultiBinding>
                             </Frame.BackgroundColor>
-
-                            <!-- Bấm bất cứ đâu trong frame cũng chọn -->
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer
-                                    Command="{Binding Source={x:Reference RootPopup}, Path=SelectDiscountCommand}"
-                                    CommandParameter="{Binding .}" />
-                            </Frame.GestureRecognizers>
 
                             <VerticalStackLayout>
                                 <Label Text="{Binding Name}" FontAttributes="Bold" />
@@ -54,6 +53,7 @@
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
+
             </CollectionView>
 
             <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">

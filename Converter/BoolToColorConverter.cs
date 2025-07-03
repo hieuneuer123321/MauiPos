@@ -35,19 +35,24 @@ namespace MauiAppUIDemo.Converter
     }
     public class DiscountSelectedColorConverter : IMultiValueConverter
     {
-        public Color SelectedColor { get; set; } = Color.FromArgb("#D1C4E9"); // màu khi chọn
-        public Color DefaultColor { get; set; } = Colors.White;               // màu bình thường
-
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values.Length >= 2 &&
-                values[0] is MauiAppUIDemo.Models.DiscountCode discount &&
-                values[1] is Guid selectedId)
-            {
-                return discount.Id == selectedId ? SelectedColor : DefaultColor;
-            }
+            if (values.Length < 2)
+                return Colors.White;
 
-            return DefaultColor;
+            var discount = values[0] as DiscountCode;
+            var selectedId = values[1] as Guid?;
+
+            if (discount == null || selectedId == null)
+                return Colors.White;
+
+            if (!discount.IsValidForTotalCached)
+                return Color.FromArgb("#eeeeee"); // không hợp lệ
+
+            if (discount.Id == selectedId.Value)
+                return Color.FromArgb("#D1C4E9"); // mã đang được chọn
+
+            return Colors.White; // mặc định
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

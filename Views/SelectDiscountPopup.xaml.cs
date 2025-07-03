@@ -2,46 +2,54 @@
 using MauiAppUIDemo.Models;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-namespace MauiAppUIDemo.Views;
+using Microsoft.Maui.Controls;
 
-public partial class SelectDiscountPopup : Popup
+namespace MauiAppUIDemo.Views
 {
-    public ObservableCollection<DiscountCode> DiscountCodes { get; set; }
-    public ICommand SelectDiscountCommand { get; }
-
-    private DiscountCode selected;
-
-    // ➕ Thêm thuộc tính này để binding đổi màu
-    public Guid SelectedDiscountId { get; set; } = Guid.Empty;
-
-    public SelectDiscountPopup(List<DiscountCode> discounts, double currentTotal)
+    public partial class SelectDiscountPopup : Popup
     {
-        InitializeComponent();
-        foreach (var d in discounts)
+        public ObservableCollection<DiscountCode> DiscountCodes { get; set; }
+
+        public static readonly BindableProperty SelectedDiscountIdProperty =
+            BindableProperty.Create(nameof(SelectedDiscountId), typeof(Guid), typeof(SelectDiscountPopup), Guid.Empty);
+
+        public Guid SelectedDiscountId
         {
-            d.IsValidForTotalCached = d.IsValidForTotal(currentTotal);
+            get => (Guid)GetValue(SelectedDiscountIdProperty);
+            set => SetValue(SelectedDiscountIdProperty, value);
         }
 
-        DiscountCodes = new ObservableCollection<DiscountCode>(discounts);
+        public ICommand SelectDiscountCommand { get; }
 
-        SelectDiscountCommand = new Command<DiscountCode>((d) =>
+        private DiscountCode selected;
+
+        public SelectDiscountPopup(List<DiscountCode> discounts, double currentTotal)
         {
-            if (d != null)
+            InitializeComponent();
+
+            foreach (var d in discounts)
+                d.IsValidForTotalCached = d.IsValidForTotal(currentTotal);
+
+            DiscountCodes = new ObservableCollection<DiscountCode>(discounts);
+
+            SelectDiscountCommand = new Command<DiscountCode>((d) =>
             {
-                selected = d;
-                SelectedDiscountId = d.Id;
-                OnPropertyChanged(nameof(SelectedDiscountId)); // ⚠️ thông báo cập nhật binding
-            }
-        });
+                if (d != null && d.IsValidForTotalCached) // Chỉ cho chọn nếu hợp lệ
+                {
+                    selected = d;
+                    SelectedDiscountId = d.Id;
+                }
+            });
 
-        BindingContext = this;
-    }
+            BindingContext = this;
+        }
 
-    private void OnCancelClicked(object sender, EventArgs e) => Close();
+        private void OnCancelClicked(object sender, EventArgs e) => Close();
 
-    private void OnApplyClicked(object sender, EventArgs e)
-    {
-        if (selected != null)
-            Close(selected);
+        private void OnApplyClicked(object sender, EventArgs e)
+        {
+            if (selected != null)
+                Close(selected);
+        }
     }
 }
