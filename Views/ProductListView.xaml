@@ -16,14 +16,17 @@
         <!-- DANH SÁCH MÓN ĂN -->
         <StackLayout Grid.Column="0" Padding="10">
             <!-- Tìm kiếm và danh mục -->
-            <HorizontalStackLayout Spacing="10">
-                <SearchBar  Placeholder="Tìm món..." Text="{Binding SearchText}" WidthRequest="180"/>
-                <Picker Title="Danh mục"
+            <Grid ColumnDefinitions="*, Auto" Padding="0,0,0,10">
+                <SearchBar Grid.Column="0"
+               Placeholder="Tìm món..."
+               Text="{Binding SearchText}" />
+
+                <Picker Grid.Column="1"                  
+            Title="Tất cả"
             ItemsSource="{Binding Categories}"
             SelectedItem="{Binding SelectedCategory}"
-            WidthRequest="120"
-            HorizontalOptions="End" />
-            </HorizontalStackLayout>
+            WidthRequest="220" />
+            </Grid>
 
             <CollectionView ItemsSource="{Binding FilteredProducts}"
                             ItemsLayout="VerticalGrid, 3"
