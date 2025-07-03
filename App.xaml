@@ -16,7 +16,7 @@
             <!-- ✅ Converter khai báo TRỰC TIẾP ở đây -->
             <converter:BoolToColorConverter x:Key="BoolToColorConverter" />
             <converter:BoolToppingToColorConverter x:Key="BoolToppingToColorConverter" />
-            
+            <converter:DiscountSelectedColorConverter x:Key="DiscountSelectedColorConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

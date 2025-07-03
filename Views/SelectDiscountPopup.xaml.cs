@@ -1,39 +1,47 @@
 ﻿using CommunityToolkit.Maui.Views;
 using MauiAppUIDemo.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+namespace MauiAppUIDemo.Views;
 
-namespace MauiAppUIDemo.Views
+public partial class SelectDiscountPopup : Popup
 {
-    public partial class SelectDiscountPopup : Popup
+    public ObservableCollection<DiscountCode> DiscountCodes { get; set; }
+    public ICommand SelectDiscountCommand { get; }
+
+    private DiscountCode selected;
+
+    // ➕ Thêm thuộc tính này để binding đổi màu
+    public Guid SelectedDiscountId { get; set; } = Guid.Empty;
+
+    public SelectDiscountPopup(List<DiscountCode> discounts, double currentTotal)
     {
-        private DiscountCode selectedDiscount;
-
-        public SelectDiscountPopup(List<DiscountCode> discounts, double currentTotal)
+        InitializeComponent();
+        foreach (var d in discounts)
         {
-            InitializeComponent();
-
-            // Đánh dấu mã hợp lệ
-            foreach (var d in discounts)
-                d.IsValidForTotalCached = d.IsValidForTotal(currentTotal);
-
-            DiscountList.ItemsSource = discounts;
+            d.IsValidForTotalCached = d.IsValidForTotal(currentTotal);
         }
 
-        private void OnCancelClicked(object sender, EventArgs e)
-        {
-            Close(); // Không trả về mã nào
-        }
+        DiscountCodes = new ObservableCollection<DiscountCode>(discounts);
 
-        private void OnApplyClicked(object sender, EventArgs e)
+        SelectDiscountCommand = new Command<DiscountCode>((d) =>
         {
-            Close(selectedDiscount); // Trả về mã đã chọn
-        }
+            if (d != null)
+            {
+                selected = d;
+                SelectedDiscountId = d.Id;
+                OnPropertyChanged(nameof(SelectedDiscountId)); // ⚠️ thông báo cập nhật binding
+            }
+        });
 
-        private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            selectedDiscount = e.CurrentSelection.FirstOrDefault() as DiscountCode;
-        }
+        BindingContext = this;
+    }
+
+    private void OnCancelClicked(object sender, EventArgs e) => Close();
+
+    private void OnApplyClicked(object sender, EventArgs e)
+    {
+        if (selected != null)
+            Close(selected);
     }
 }

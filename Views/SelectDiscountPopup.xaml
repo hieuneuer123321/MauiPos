@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <toolkit:Popup
+    x:Class="MauiAppUIDemo.Views.SelectDiscountPopup"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:models="clr-namespace:MauiAppUIDemo.Models"
     xmlns:converter="clr-namespace:MauiAppUIDemo.Converter"
-    x:Class="MauiAppUIDemo.Views.SelectDiscountPopup"
+     x:Name="RootPopup"
     Size="400,500">
 
     <toolkit:Popup.Resources>
         <converter:BoolToColorConverter x:Key="BoolToColorConverter" />
     </toolkit:Popup.Resources>
 
-    <Border BackgroundColor="White"
-            Padding="20"
-            Stroke="#ccc"
-            StrokeThickness="1"
-            StrokeShape="RoundRectangle 20">
+    <Border BackgroundColor="White" Padding="20" Stroke="#ccc" StrokeThickness="1" StrokeShape="RoundRectangle 20">
         <VerticalStackLayout Spacing="15">
 
             <Label Text="Chọn mã giảm giá"
@@ -25,16 +22,30 @@
                    HorizontalOptions="Center" />
 
             <CollectionView x:Name="DiscountList"
-                            SelectionMode="Single"
-                            SelectionChanged="OnSelectionChanged"
-                            HeightRequest="350">
+                            SelectionMode="None"
+                            HeightRequest="350"
+                            ItemsSource="{Binding DiscountCodes}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:DiscountCode">
-                        <Frame BackgroundColor="{Binding IsValidForTotalCached, Converter={StaticResource BoolToColorConverter}}"
+                        <Frame 
                                BorderColor="#ccc"
                                CornerRadius="12"
                                Padding="10"
                                Margin="5">
+                            <Frame.BackgroundColor>
+                                <MultiBinding Converter="{StaticResource DiscountSelectedColorConverter}">
+                                    <Binding Path="." />
+                                    <Binding Source="{x:Reference RootPopup}" Path="SelectedDiscountId" />
+                                </MultiBinding>
+                            </Frame.BackgroundColor>
+
+                            <!-- Bấm bất cứ đâu trong frame cũng chọn -->
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={x:Reference RootPopup}, Path=SelectDiscountCommand}"
+                                    CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+
                             <VerticalStackLayout>
                                 <Label Text="{Binding Name}" FontAttributes="Bold" />
                                 <Label Text="{Binding Description}" FontSize="13" />

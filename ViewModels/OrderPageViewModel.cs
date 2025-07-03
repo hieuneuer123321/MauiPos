@@ -177,6 +177,7 @@ namespace MauiAppUIDemo.ViewModels
         }
 
 
+
         private async Task<List<Topping>> ShowToppingPopup(List<Topping> toppings)
         {
             var popup = new SelectToppingPopup(toppings);

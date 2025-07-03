@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MauiAppUIDemo.Models;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -30,6 +31,26 @@ namespace MauiAppUIDemo.Converter
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            => throw new NotImplementedException();
+    }
+    public class DiscountSelectedColorConverter : IMultiValueConverter
+    {
+        public Color SelectedColor { get; set; } = Color.FromArgb("#D1C4E9"); // màu khi chọn
+        public Color DefaultColor { get; set; } = Colors.White;               // màu bình thường
+
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values.Length >= 2 &&
+                values[0] is MauiAppUIDemo.Models.DiscountCode discount &&
+                values[1] is Guid selectedId)
+            {
+                return discount.Id == selectedId ? SelectedColor : DefaultColor;
+            }
+
+            return DefaultColor;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
             => throw new NotImplementedException();
     }
 }
