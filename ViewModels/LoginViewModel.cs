@@ -43,7 +43,11 @@ public partial class LoginViewModel : ObservableObject
             if (result.Succeeded)
             {
                 // ✅ Lưu token an toàn
-                await TokenStorage.SaveTokensAsync(result.Data.AccessToken, result.Data.RefreshToken);
+                await TokenStorage.SaveTokenAsync(
+                        result.Data.AccessToken,
+                        result.Data.RefreshToken,
+                        result.Data.ExpiresIn
+                    );
 
                 // ✅ Gắn vào ApiService
                 _authService.SetToken(result.Data.AccessToken); // hoặc gọi ApiService.Instance.SetAccessToken(...)
