@@ -1,4 +1,6 @@
-﻿namespace MauiAppUIDemo
+﻿using MauiAppUIDemo.Services;
+
+namespace MauiAppUIDemo
 {
     public partial class App : Application
     {
@@ -6,7 +8,12 @@
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            // ✅ Gán trước một trang tối giản (tránh lỗi)
+            MainPage = new AppShell(); // ✅ Gán Shell luôn, không để ContentPage tạm nữa
         }
+
+      
     }
+
+
 }
