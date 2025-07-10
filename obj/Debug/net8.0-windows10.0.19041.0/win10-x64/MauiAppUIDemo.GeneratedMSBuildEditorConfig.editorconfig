@@ -15,7 +15,7 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = MauiAppUIDemo
-build_property.ProjectDir = C:\Users\vit002\Desktop\MauiDemo\MauiAppUIPOS\MauiAppUIDemo\
+build_property.ProjectDir = C:\Users\vit002\Desktop\MauiAppUIPOS\MauiAppUIDemo\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.CsWinRTAotExportsEnabled = 
@@ -27,73 +27,73 @@ build_property.CsWinRTUseWindowsUIXamlProjections = false
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/vit002/Desktop/MauiDemo/MauiAppUIPOS/MauiAppUIDemo/App.xaml]
+[C:/Users/vit002/Desktop/MauiAppUIPOS/MauiAppUIDemo/App.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MauiAppUIDemo.App.xaml
 build_metadata.AdditionalFiles.TargetPath = App.xaml
 build_metadata.AdditionalFiles.RelativePath = App.xaml
 
-[C:/Users/vit002/Desktop/MauiDemo/MauiAppUIPOS/MauiAppUIDemo/AppShell.xaml]
+[C:/Users/vit002/Desktop/MauiAppUIPOS/MauiAppUIDemo/AppShell.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MauiAppUIDemo.AppShell.xaml
 build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
 build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
 
-[C:/Users/vit002/Desktop/MauiDemo/MauiAppUIPOS/MauiAppUIDemo/LoginPage.xaml]
+[C:/Users/vit002/Desktop/MauiAppUIPOS/MauiAppUIDemo/LoginPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MauiAppUIDemo.LoginPage.xaml
 build_metadata.AdditionalFiles.TargetPath = LoginPage.xaml
 build_metadata.AdditionalFiles.RelativePath = LoginPage.xaml
 
-[C:/Users/vit002/Desktop/MauiDemo/MauiAppUIPOS/MauiAppUIDemo/MainPage.xaml]
+[C:/Users/vit002/Desktop/MauiAppUIPOS/MauiAppUIDemo/MainPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MauiAppUIDemo.MainPage.xaml
 build_metadata.AdditionalFiles.TargetPath = MainPage.xaml
 build_metadata.AdditionalFiles.RelativePath = MainPage.xaml
 
-[C:/Users/vit002/Desktop/MauiDemo/MauiAppUIPOS/MauiAppUIDemo/Resources/Styles/Colors.xaml]
+[C:/Users/vit002/Desktop/MauiAppUIPOS/MauiAppUIDemo/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MauiAppUIDemo.Resources.Styles.Colors.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
 
-[C:/Users/vit002/Desktop/MauiDemo/MauiAppUIPOS/MauiAppUIDemo/Resources/Styles/Styles.xaml]
+[C:/Users/vit002/Desktop/MauiAppUIPOS/MauiAppUIDemo/Resources/Styles/Styles.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MauiAppUIDemo.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
 
-[C:/Users/vit002/Desktop/MauiDemo/MauiAppUIPOS/MauiAppUIDemo/Views/AboutView.xaml]
+[C:/Users/vit002/Desktop/MauiAppUIPOS/MauiAppUIDemo/Views/AboutView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MauiAppUIDemo.Views.AboutView.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\AboutView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\AboutView.xaml
 
-[C:/Users/vit002/Desktop/MauiDemo/MauiAppUIPOS/MauiAppUIDemo/Views/HomeView.xaml]
+[C:/Users/vit002/Desktop/MauiAppUIPOS/MauiAppUIDemo/Views/HomeView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MauiAppUIDemo.Views.HomeView.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\HomeView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\HomeView.xaml
 
-[C:/Users/vit002/Desktop/MauiDemo/MauiAppUIPOS/MauiAppUIDemo/Views/ProductListView.xaml]
+[C:/Users/vit002/Desktop/MauiAppUIPOS/MauiAppUIDemo/Views/ProductListView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MauiAppUIDemo.Views.ProductListView.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\ProductListView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\ProductListView.xaml
 
-[C:/Users/vit002/Desktop/MauiDemo/MauiAppUIPOS/MauiAppUIDemo/Views/SelectDiscountPopup.xaml]
+[C:/Users/vit002/Desktop/MauiAppUIPOS/MauiAppUIDemo/Views/SelectDiscountPopup.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MauiAppUIDemo.Views.SelectDiscountPopup.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\SelectDiscountPopup.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\SelectDiscountPopup.xaml
 
-[C:/Users/vit002/Desktop/MauiDemo/MauiAppUIPOS/MauiAppUIDemo/Views/SelectToppingPopup.xaml]
+[C:/Users/vit002/Desktop/MauiAppUIPOS/MauiAppUIDemo/Views/SelectToppingPopup.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MauiAppUIDemo.Views.SelectToppingPopup.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\SelectToppingPopup.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\SelectToppingPopup.xaml
 
-[C:/Users/vit002/Desktop/MauiDemo/MauiAppUIPOS/MauiAppUIDemo/Views/SettingsView.xaml]
+[C:/Users/vit002/Desktop/MauiAppUIPOS/MauiAppUIDemo/Views/SettingsView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MauiAppUIDemo.Views.SettingsView.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\SettingsView.xaml

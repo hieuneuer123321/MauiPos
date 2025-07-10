@@ -12,7 +12,11 @@
         var expiryTime = DateTimeOffset.UtcNow.AddSeconds(expiresInSeconds).ToUnixTimeSeconds().ToString();
         await SecureStorage.SetAsync(ExpiryKey, expiryTime);
     }
-
+    public static async Task ClearTokensAsync()
+    {
+        SecureStorage.Remove(AccessTokenKey);
+        SecureStorage.Remove(RefreshTokenKey);
+    }
     public static async Task<string> GetAccessTokenAsync()
     {
         return await SecureStorage.GetAsync(AccessTokenKey);

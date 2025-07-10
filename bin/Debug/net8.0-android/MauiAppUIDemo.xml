@@ -86,6 +86,7 @@
         <member name="T:MauiAppUIDemo.ViewModels.MainViewModel">
             <inheritdoc/>
             <inheritdoc/>
+            <inheritdoc/>
         </member>
         <member name="P:MauiAppUIDemo.ViewModels.MainViewModel.SelectedMenuItem">
             <inheritdoc cref="F:MauiAppUIDemo.ViewModels.MainViewModel.selectedMenuItem"/>
@@ -93,11 +94,20 @@
         <member name="P:MauiAppUIDemo.ViewModels.MainViewModel.CurrentView">
             <inheritdoc cref="F:MauiAppUIDemo.ViewModels.MainViewModel.currentView"/>
         </member>
+        <member name="P:MauiAppUIDemo.ViewModels.MainViewModel.UserName">
+            <inheritdoc cref="F:MauiAppUIDemo.ViewModels.MainViewModel.userName"/>
+        </member>
         <member name="F:MauiAppUIDemo.ViewModels.MainViewModel.menuItemSelectedCommand">
             <summary>The backing field for <see cref="P:MauiAppUIDemo.ViewModels.MainViewModel.MenuItemSelectedCommand"/>.</summary>
         </member>
         <member name="P:MauiAppUIDemo.ViewModels.MainViewModel.MenuItemSelectedCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:MauiAppUIDemo.ViewModels.MainViewModel.MenuItemSelected(MauiAppUIDemo.Models.MenuItemModel)"/>.</summary>
+        </member>
+        <member name="F:MauiAppUIDemo.ViewModels.MainViewModel.logoutCommand">
+            <summary>The backing field for <see cref="P:MauiAppUIDemo.ViewModels.MainViewModel.LogoutCommand"/>.</summary>
+        </member>
+        <member name="P:MauiAppUIDemo.ViewModels.MainViewModel.LogoutCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:MauiAppUIDemo.ViewModels.MainViewModel.LogoutAsync"/>.</summary>
         </member>
         <member name="T:MauiAppUIDemo.ViewModels.OrderPageViewModel">
             <inheritdoc/>
@@ -344,6 +354,9 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CurrentView">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CurrentView" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.UserName">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "UserName" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedDiscount">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedDiscount" generated properties.</summary>
         </member>
@@ -415,6 +428,9 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CurrentView">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CurrentView" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.UserName">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "UserName" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedDiscount">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedDiscount" generated properties.</summary>

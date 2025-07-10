@@ -22,19 +22,38 @@
 
         <!-- ✅ Header: chiếm 2 cột -->
         <!-- Header Grid -->
-        <Grid Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="#f7f7f7" Padding="20" ColumnDefinitions="*,*">
+        <!-- Header Grid -->
+        <Grid Grid.Row="0" Grid.ColumnSpan="2"
+BackgroundColor="#f7f7f7"
+Padding="20"
+ColumnDefinitions="*,Auto">
+
+            <!-- Tiêu đề bên trái -->
             <Label Text="🌐 POS Cafe PTH Start"
-           FontSize="24"
-           FontAttributes="Bold"
-           TextColor="#333333"
-           VerticalOptions="Center"
-           HorizontalOptions="Start" />
-            <Label Text="User Info / Actions"
-           FontSize="16"
-           TextColor="#666666"
-           VerticalOptions="Center"
-           HorizontalOptions="End"
-           Grid.Column="1" />
+   FontSize="24"
+   FontAttributes="Bold"
+   TextColor="#333333"
+   VerticalOptions="Center"
+   HorizontalOptions="Start" />
+
+            <!-- Tên người dùng + nút logout -->
+            <HorizontalStackLayout Grid.Column="1"
+                   Spacing="10"
+                   VerticalOptions="Center"
+                   HorizontalOptions="End">
+                <Label Text="{Binding UserName}"
+     FontSize="14"
+     TextColor="#666666"
+     VerticalOptions="Center" />
+
+                <Button Text="Đăng xuất"
+      FontSize="13"
+      Padding="8"
+      BackgroundColor="#e53935"
+      TextColor="White"
+      CornerRadius="10"
+      Command="{Binding LogoutCommand}" />
+            </HorizontalStackLayout>
         </Grid>
 
         <!-- BoxView tạo border-bottom dưới header -->

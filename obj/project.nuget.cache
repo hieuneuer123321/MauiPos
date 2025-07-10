@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "s03UMU35n98=",
+  "dgSpecHash": "LufwFvwtweY=",
   "success": true,
-  "projectFilePath": "C:\\Users\\vit002\\Desktop\\MauiDemo\\MauiAppUIPOS\\MauiAppUIDemo\\MauiAppUIDemo.csproj",
+  "projectFilePath": "C:\\Users\\vit002\\Desktop\\MauiAppUIPOS\\MauiAppUIDemo\\MauiAppUIDemo.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vit002\\.nuget\\packages\\communitytoolkit.maui\\8.0.0\\communitytoolkit.maui.8.0.0.nupkg.sha512",
     "C:\\Users\\vit002\\.nuget\\packages\\communitytoolkit.maui.core\\8.0.0\\communitytoolkit.maui.core.8.0.0.nupkg.sha512",

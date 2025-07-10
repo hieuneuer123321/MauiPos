@@ -53,6 +53,7 @@ public partial class MainViewModel : ObservableObject
 
     public MainViewModel()
     {
+        UserName = "👤 Admin";
         foreach (var item in MenuItems)
         {
             if (item.SubMenuItems != null)
@@ -71,6 +72,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     public async Task MenuItemSelected(MenuItemModel menu)
     {
+        
         if (menu == null) return;
 
         if (menu.HasSubMenus)
@@ -110,7 +112,15 @@ public partial class MainViewModel : ObservableObject
         if (menu.TargetViewType != null)
             CurrentView = Activator.CreateInstance(menu.TargetViewType) as View;
     }
+    [ObservableProperty]
+    private string userName;
 
+    [RelayCommand]
+    private async Task LogoutAsync()
+    {
+        await TokenStorage.ClearTokensAsync(); // Xóa access + refresh token
+        await Shell.Current.GoToAsync("//LoginPage");
+    }
     private async Task AnimateSubMenu(MenuItemModel menu, bool expand)
     {
         if (menu.IsAnimating) return;

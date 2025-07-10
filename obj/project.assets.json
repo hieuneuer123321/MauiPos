@@ -34960,11 +34960,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\vit002\\Desktop\\MauiDemo\\MauiAppUIPOS\\MauiAppUIDemo\\MauiAppUIDemo.csproj",
+      "projectUniqueName": "C:\\Users\\vit002\\Desktop\\MauiAppUIPOS\\MauiAppUIDemo\\MauiAppUIDemo.csproj",
       "projectName": "MauiAppUIDemo",
-      "projectPath": "C:\\Users\\vit002\\Desktop\\MauiDemo\\MauiAppUIPOS\\MauiAppUIDemo\\MauiAppUIDemo.csproj",
+      "projectPath": "C:\\Users\\vit002\\Desktop\\MauiAppUIPOS\\MauiAppUIDemo\\MauiAppUIDemo.csproj",
       "packagesPath": "C:\\Users\\vit002\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\vit002\\Desktop\\MauiDemo\\MauiAppUIPOS\\MauiAppUIDemo\\obj\\",
+      "outputPath": "C:\\Users\\vit002\\Desktop\\MauiAppUIPOS\\MauiAppUIDemo\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [
