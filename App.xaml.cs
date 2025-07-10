@@ -1,4 +1,5 @@
 ﻿using MauiAppUIDemo.Services;
+using MauiAppUIDemo.ViewModels;
 
 namespace MauiAppUIDemo
 {
@@ -7,13 +8,26 @@ namespace MauiAppUIDemo
         public App()
         {
             InitializeComponent();
-
-            // ✅ Gán trước một trang tối giản (tránh lỗi)
-            MainPage = new AppShell(); // ✅ Gán Shell luôn, không để ContentPage tạm nữa
+            MainPage = new LoadingPage(); // gán ngay
+            InitRootPage(); // xử lý sau
         }
 
-      
+        private async void InitRootPage()
+        {
+            var token = await TokenStorage.GetAccessTokenAsync();
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                AppServices.ApiService.SetAccessToken(token);
+                MainPage = new AppShell(); // vào Main
+            }
+            else
+            {
+                MainPage = new NavigationPage(new LoginPage(new LoginViewModel(AppServices.AuthService)));
+            }
+        }
     }
-
-
 }
+
+
+

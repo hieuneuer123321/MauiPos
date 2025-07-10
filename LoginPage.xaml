@@ -5,25 +5,60 @@
     xmlns:viewmodel="clr-namespace:MauiAppUIDemo.ViewModels"
     x:Class="MauiAppUIDemo.LoginPage"
     x:DataType="viewmodel:LoginViewModel"
-    BackgroundColor="#F3F3F3"
-    Padding="30">
+    BackgroundColor="#ffffff"
+    Padding="30,0,30,20">
 
-    <VerticalStackLayout Spacing="20" VerticalOptions="CenterAndExpand">
+    <ScrollView>
+        <VerticalStackLayout Spacing="25"
+                         VerticalOptions="Start"
+                         Padding="30,60,30,30">
+            <!-- tăng top padding nếu cần -->
+            <!-- Icon -->
+            <Label Text="☕"
+               FontSize="64"
+               HorizontalOptions="Center" />
 
-        <Label Text="Đăng nhập" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center" />
+            <!-- Tiêu đề -->
+            <Label Text="POS Cafe Đăng Nhập"
+               FontSize="24"
+               FontAttributes="Bold"
+               TextColor="#333"
+               HorizontalOptions="Center" />
 
-        <Entry Placeholder="Email" Text="{Binding Email}" Keyboard="Email" />
-        <Entry Placeholder="Mật khẩu" Text="{Binding Password}" IsPassword="True" />
+            <!-- Email -->
+            <Label Text="Email" FontSize="14" TextColor="#555" />
+            <Entry Placeholder="Nhập email"
+               Text="{Binding Email}" 
+               Keyboard="Email"
+               BackgroundColor="#f8f8f8"
+               HeightRequest="44" />
 
-        <Label Text="{Binding ErrorMessage}" TextColor="Red" FontSize="13" IsVisible="{Binding IsError}" />
+            <!-- Mật khẩu -->
+            <Label Text="Mật khẩu" FontSize="14" TextColor="#555" />
+            <Entry Placeholder="Nhập mật khẩu"
+               Text="{Binding Password}" 
+               IsPassword="True"
+               BackgroundColor="#f8f8f8"
+               HeightRequest="44" />
 
-        <Button Text="Đăng nhập"
+            <!-- Thông báo lỗi -->
+            <Label Text="{Binding ErrorMessage}"
+               TextColor="Red"
+               FontSize="13"
+               IsVisible="{Binding IsError}" />
+
+            <!-- Nút -->
+            <Button Text="Đăng nhập"
                 Command="{Binding LoginCommand}"
-                BackgroundColor="#6200EA"
+                BackgroundColor="#4CAF50"
                 TextColor="White"
-                CornerRadius="8" />
+                CornerRadius="8"
+                HeightRequest="48" />
 
-        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+            <!-- Loading -->
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}" />
+        </VerticalStackLayout>
+    </ScrollView>
 
-    </VerticalStackLayout>
 </ContentPage>
