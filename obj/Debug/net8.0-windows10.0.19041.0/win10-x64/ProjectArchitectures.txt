@@ -1,1 +1,1 @@
-C:\Users\vit002\Desktop\MauiDemo\MauiAppUIPOS\MauiAppUIDemo\MauiAppUIDemo.csproj;x64
+C:\Users\vit002\Desktop\MauiAppUIPOS\MauiAppUIDemo\MauiAppUIDemo.csproj;x64

@@ -12,6 +12,7 @@ namespace MauiAppUIDemo.ViewModels
 {
     public partial class OrderPageViewModel : ObservableObject
     {
+      
         public ObservableCollection<Product> Products { get; } = new();
         public ObservableCollection<OrderItem> OrderItems { get; } = new();
         public ObservableCollection<string> Categories { get; } = new();
@@ -92,7 +93,9 @@ namespace MauiAppUIDemo.ViewModels
             _productService = productService;
 
             Categories.Add("Tất cả");
+            SelectedCategory = "Tất cả";
             LoadProductsAsync(); // Gọi luôn khi khởi tạo
+
             /// 
             // Mã giảm giá mẫu
             AvailableDiscounts.Add(new DiscountCode
@@ -236,6 +239,26 @@ namespace MauiAppUIDemo.ViewModels
             var chars = normalized.Where(c => System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c) != System.Globalization.UnicodeCategory.NonSpacingMark);
             return new string(chars.ToArray()).Normalize(System.Text.NormalizationForm.FormC);
         }
+        private async Task<ImageSource> LoadImageFromUrl(string url)
+        {
+            try
+            {
+                var handler = new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+                };
+
+                using var httpClient = new HttpClient(handler);
+                var bytes = await httpClient.GetByteArrayAsync(url);
+                return ImageSource.FromStream(() => new MemoryStream(bytes));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("❌ Load image failed: " + ex.Message);
+                return null;
+            }
+        }
+
         /////// Call api
         [ObservableProperty]
         bool isLoading;
@@ -252,21 +275,39 @@ namespace MauiAppUIDemo.ViewModels
 
                 foreach (var p in response.Items)
                 {
-                    Products.Add(new Product
+                    //Products.Add(new Product
+                    //{
+                    //    ProductId = p.ProductId,
+                    //    ProductName = p.ProductName,
+                    //    ProductPrice = p.ProductPrice,
+                    //    ProductImgUrl = p.ProductImgUrl,
+                    //    ProductCategory = p.ProductCategory,
+                    //    ProductStatus = p.ProductStatus
+                    //});
+                    //// ✅ Tải ảnh từ URL
+
+                    //if (!string.IsNullOrEmpty(p.ProductCategory?.CategoryName) &&
+                    //    !Categories.Contains(p.ProductCategory.CategoryName))
+                    //{
+                    //    Categories.Add(p.ProductCategory.CategoryName);
+                    //}
+                    var product = new Product
                     {
-                        ProductId = p.ProductId,
                         ProductName = p.ProductName,
                         ProductPrice = p.ProductPrice,
                         ProductImgUrl = p.ProductImgUrl,
                         ProductCategory = p.ProductCategory,
                         ProductStatus = p.ProductStatus
-                    });
-
+                    };
                     if (!string.IsNullOrEmpty(p.ProductCategory?.CategoryName) &&
                         !Categories.Contains(p.ProductCategory.CategoryName))
                     {
                         Categories.Add(p.ProductCategory.CategoryName);
                     }
+                    // ✅ Tải ảnh từ URL
+                    product.ImageSource = await LoadImageFromUrl(p.ProductImgUrl);
+
+                    Products.Add(product);
                 }
                 Console.WriteLine(Products);
                 OnPropertyChanged(nameof(FilteredProducts));

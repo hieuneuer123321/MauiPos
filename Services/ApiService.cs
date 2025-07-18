@@ -1,4 +1,7 @@
 ﻿using MauiAppUIDemo.Models;
+#if ANDROID
+using MauiAppUIDemo.Platforms.Android;
+#endif
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
@@ -12,11 +15,15 @@ namespace MauiAppUIDemo.Services
 
         public ApiService()
         {
-            _httpClient = new HttpClient
-            {
-                BaseAddress = new Uri("http://apipos.somee.com/") // 🔁 Thay bằng API thật
-            };
+        #if ANDROID
+                    _httpClient = new HttpClient(new CustomAndroidHttpHandler());
+        #else
+            _httpClient = new HttpClient();
+        #endif
+
+            _httpClient.BaseAddress = new Uri("http://apipos.somee.com/"); // 👈 Sửa base URL của bạn nếu cần
         }
+
 
         public void SetAccessToken(string token)
         {

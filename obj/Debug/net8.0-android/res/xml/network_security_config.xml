@@ -1,0 +1,1 @@
+<network-security-config><base-config cleartextTrafficPermitted="true" /><domain-config cleartextTrafficPermitted="true"><domain includeSubdomains="true">zsvylavugwlgqurzxugs.supabase.co</domain></domain-config></network-security-config>

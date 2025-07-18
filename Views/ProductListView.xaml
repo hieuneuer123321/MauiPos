@@ -14,54 +14,96 @@
         </Grid.ColumnDefinitions>
 
         <!-- DANH SÁCH MÓN ĂN -->
-        <StackLayout Grid.Column="0" Padding="10">
+        <!-- DANH SÁCH MÓN ĂN -->
+        <Grid Grid.Column="0" Padding="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Tìm kiếm + Picker -->
+                <RowDefinition Height="Auto"/>
+                <!-- Loading indicator -->
+                <RowDefinition Height="*"/>
+                <!-- Danh sách sản phẩm -->
+            </Grid.RowDefinitions>
+
             <!-- Tìm kiếm và danh mục -->
-            <Grid ColumnDefinitions="*,Auto" Padding="0,0,0,10" ColumnSpacing="10">
-
-                <!-- SearchBar bọc trong Frame -->
+            <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Padding="0,0,0,10" ColumnSpacing="10">
+                <!-- SearchBar -->
                 <Frame Grid.Column="0"
-           Padding="0"
-           CornerRadius="20"
-           BorderColor="#ccc"
-           HasShadow="False"
-           HeightRequest="40"
-           VerticalOptions="Center">
+               Padding="0"
+               CornerRadius="20"
+               BorderColor="#ccc"
+               HasShadow="False"
+               HeightRequest="40"
+               VerticalOptions="Center">
                     <SearchBar Placeholder="Tìm món..."
-                   Text="{Binding SearchText}"
-                   BackgroundColor="White"
-                   FontSize="14"
-                   Margin="10,0"
-                   CancelButtonColor="Gray" />
+                       Text="{Binding SearchText}"
+                       BackgroundColor="White"
+                       FontSize="14"
+                       Margin="10,0"
+                       CancelButtonColor="Gray" />
                 </Frame>
 
-                <!-- Picker bọc trong Frame -->
+                <!-- Picker -->
+                <!-- Picker -->
                 <Frame Grid.Column="1"
-                       Padding="0"
-                       CornerRadius="20"
-                       BorderColor="#ccc"
-                       HasShadow="False"
-                       HeightRequest="40"
-                       VerticalOptions="Center">
-                    <Picker Title="Tất cả         🔽"
-                        ItemsSource="{Binding Categories}"
-                        SelectedItem="{Binding SelectedCategory}"
-                        WidthRequest="140"
-                        FontSize="14"
-                        Margin="10,0" />
+                     Padding="0"
+                     CornerRadius="20"
+                     BorderColor="#ccc"
+                     HasShadow="False"
+                     HeightRequest="40"
+                     WidthRequest="140"
+                     VerticalOptions="Center"
+                     BackgroundColor="White">       
+                    <Grid Padding="10,0" ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                        <!-- Hiển thị tên danh mục -->
+                        <Label Text="{Binding SelectedCategory, FallbackValue='Tất cả'}"
+                 VerticalOptions="Center"
+                 FontSize="14"
+                 TextColor="Black"
+                 LineBreakMode="TailTruncation"/>
+                        <!-- Biểu tượng mũi tên -->
+                        <Label Grid.Column="1"
+                 Text="▼"
+                 FontSize="14"
+                 VerticalOptions="Center"
+                 TextColor="Gray"
+                 Margin="5,0,0,0" />
+
+                        <!-- Picker thật nhưng ẩn, dùng để chọn -->
+                        <Picker x:Name="CategoryPicker" Title="Danh mục loại sản phẩm"
+                  ItemsSource="{Binding Categories}"
+                  SelectedItem="{Binding SelectedCategory}"
+                  Opacity="0"
+                  BackgroundColor="Transparent"
+                  Margin="0"
+                  HorizontalOptions="FillAndExpand"
+                  VerticalOptions="FillAndExpand" />
+                    </Grid>
                 </Frame>
-
             </Grid>
-
-            <CollectionView ItemsSource="{Binding FilteredProducts}"
-                            ItemsLayout="VerticalGrid, 3"
-                            SelectionMode="None">
+            <!-- Loading -->
+            <ActivityIndicator 
+                Grid.Row="1"
+                  IsRunning="{Binding IsLoading}" 
+                  IsVisible="{Binding IsLoading}" 
+                  Color="#21498c" 
+                  VerticalOptions="Center"
+                  HorizontalOptions="Center"
+                  ZIndex="2" />
+            <!-- DANH SÁCH SẢN PHẨM -->
+            <CollectionView Grid.Row="2"
+                    ItemsSource="{Binding FilteredProducts}"
+                    ItemsLayout="VerticalGrid, 3"
+                    Opacity="{Binding IsLoading, Converter={StaticResource BoolToOpacityConverter}}"
+                    IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBoolConverter}}"
+                    SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Product">
                         <Frame Padding="0" Margin="5"
-                               BorderColor="#ddd"
-                               CornerRadius="10"
-                               HasShadow="False"
-                               BackgroundColor="White">
+                       BorderColor="#ddd"
+                       CornerRadius="10"
+                       HasShadow="False"
+                       BackgroundColor="White">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -69,120 +111,134 @@
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
 
-                                <!-- Ảnh -->
                                 <Grid Grid.Row="0">
-                                    <Image Source="{Binding ImageUrl}"
-                                           Aspect="AspectFill"
-                                           HeightRequest="120"
-                                           HorizontalOptions="Fill"
-                                           VerticalOptions="Fill" />
+                                    <Image Source="{Binding ImageSource}"
+                                   HeightRequest="120"
+                                   Aspect="AspectFill"
+                                   HorizontalOptions="Fill"
+                                   VerticalOptions="Fill"/>
                                 </Grid>
 
-                                <!-- Tên -->
                                 <Label Grid.Row="1"
-                                       Text="{Binding Name}"
-                                       FontAttributes="Bold"
-                                       FontSize="14"
-                                       HorizontalTextAlignment="Center"
-                                       Margin="5,4,5,0"/>
+                               Text="{Binding Name}"
+                               FontAttributes="Bold"
+                               FontSize="14"
+                               HorizontalTextAlignment="Center"
+                               Margin="5,4,5,0"/>
 
-                                <!-- Giá + Trạng thái -->
                                 <HorizontalStackLayout Grid.Row="2"
-                                                       Margin="5,0,5,6"
-                                                       HorizontalOptions="Center"
-                                                       Spacing="10">
+                                               Margin="5,0,5,6"
+                                               HorizontalOptions="Center"
+                                               Spacing="10">
                                     <Label Text="{Binding Price, StringFormat='Giá: {0:N0} đ'}"
-                                           FontSize="11"
-                                           TextColor="#21498c"/>
+                                   FontSize="11"
+                                   TextColor="#21498c"/>
                                     <Label Text="{Binding StatusText}"
-                                           FontSize="11"
-                                           TextColor="{Binding StatusColor}" />
+                                   FontSize="11"
+                                   TextColor="{Binding StatusColor}" />
                                 </HorizontalStackLayout>
                             </Grid>
 
-                            <!-- Click để thêm món -->
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OrderPageViewModel}}, Path=AddToOrderCommand}"
-                                    CommandParameter="{Binding .}" />
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OrderPageViewModel}}, Path=AddToOrderCommand}"
+                            CommandParameter="{Binding .}" />
                             </Frame.GestureRecognizers>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-        </StackLayout>
+        
+        </Grid>
+
 
         <!-- GIỎ HÀNG -->
-        <StackLayout Grid.Column="1" BackgroundColor="#F5F5F5" Padding="5">
-            <Label Text="Hóa đơn"
-                   Padding="5"
-                   FontAttributes="Bold"
-                   FontSize="16"
-                   Margin="0,0,0,10"
-                   BackgroundColor="#21498c"
-                   HorizontalOptions="Fill"
-                   HorizontalTextAlignment="Center"
-                   TextColor="White" />
+        <Grid Grid.Column="1" BackgroundColor="#F5F5F5" Padding="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Hóa đơn title -->
+                <RowDefinition Height="*"/>
+                <!-- Nội dung scroll -->
+                <RowDefinition Height="Auto"/>
+                <!-- Tổng tiền -->
+            </Grid.RowDefinitions>
 
-            <CollectionView ItemsSource="{Binding OrderItems}" SelectionMode="None">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:OrderItem">
-                        <Grid Padding="5" RowSpacing="5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="1"/>
-                            </Grid.RowDefinitions>
+            <!-- Header -->
+            <Label Grid.Row="0"
+           Text="Hóa đơn"
+           Padding="5"
+           FontAttributes="Bold"
+           FontSize="16"
+           Margin="0,0,0,10"
+           BackgroundColor="#21498c"
+           HorizontalOptions="Fill"
+           HorizontalTextAlignment="Center"
+           TextColor="White" />
 
-                            <StackLayout Grid.Row="0" VerticalOptions="Center">
-                                <Label Text="{Binding Name}" FontSize="16"/>
-                                <Label Text="{Binding ToppingSummary}"
+            <!-- ScrollView: phần giỏ hàng + mã giảm -->
+            <ScrollView Grid.Row="1">
+                <VerticalStackLayout Spacing="10">
+
+                    <!-- Danh sách món trong giỏ -->
+                    <CollectionView ItemsSource="{Binding OrderItems}" SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:OrderItem">
+                                <Grid Padding="5" RowSpacing="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="1"/>
+                                    </Grid.RowDefinitions>
+
+                                    <StackLayout Grid.Row="0" VerticalOptions="Center">
+                                        <Label Text="{Binding Name}" FontSize="16"/>
+                                        <Label Text="{Binding ToppingSummary}"
                                        FontSize="13"
                                        TextColor="Gray"
                                        LineBreakMode="TailTruncation" />
-                                <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto"
+                                        <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto"
                                       Padding="0"
                                       ColumnSpacing="5"
                                       Margin="0,10,0,0"
                                       VerticalOptions="Center">
-                                    <!-- Nút Giảm -->
-                                    <Frame Grid.Column="0"
+                                            <!-- Nút Giảm -->
+                                            <Frame Grid.Column="0"
                                            CornerRadius="20"
                                            Padding="0"
                                            BackgroundColor="LightGray"
                                            HasShadow="False"
                                            VerticalOptions="Center">
-                                        <Label Text="➖" FontSize="16" TextColor="Aqua">
-                                            <Label.GestureRecognizers>
-                                                <TapGestureRecognizer
+                                                <Label Text="➖" FontSize="16" TextColor="Aqua">
+                                                    <Label.GestureRecognizers>
+                                                        <TapGestureRecognizer
                                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OrderPageViewModel}}, Path=DecreaseQuantityCommand}"
                                                     CommandParameter="{Binding .}" />
-                                            </Label.GestureRecognizers>
-                                        </Label>
-                                    </Frame>
+                                                    </Label.GestureRecognizers>
+                                                </Label>
+                                            </Frame>
 
-                                    <!-- Số lượng -->
-                                    <Label Grid.Column="1"
+                                            <!-- Số lượng -->
+                                            <Label Grid.Column="1"
                                            Text="{Binding Quantity}"
                                            VerticalOptions="Center"
                                            FontSize="14"/>
-                                    <!-- Nút Tăng -->
-                                    <Frame Grid.Column="2"
+                                            <!-- Nút Tăng -->
+                                            <Frame Grid.Column="2"
                                            CornerRadius="20"
                                            Padding="0"
                                            BackgroundColor="LightGray"
                                            HasShadow="False"
                                            VerticalOptions="Center">
-                                        <Label Text="➕" FontSize="16" TextColor="White">
-                                            <Label.GestureRecognizers>
-                                                <TapGestureRecognizer
-                                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OrderPageViewModel}}, Path=IncreaseQuantityCommand}"
-                                                     CommandParameter="{Binding .}" />
-                                            </Label.GestureRecognizers>
-                                        </Label>
-                                    </Frame>
+                                                <Label Text="➕" FontSize="16" TextColor="White">
+                                                    <Label.GestureRecognizers>
+                                                        <TapGestureRecognizer
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OrderPageViewModel}}, Path=IncreaseQuantityCommand}"
+                                                    CommandParameter="{Binding .}" />
+                                                    </Label.GestureRecognizers>
+                                                </Label>
+                                            </Frame>
 
-                                    <!-- Subtotal -->
-                                    <Label Grid.Column="3"
+                                            <!-- Subtotal -->
+                                            <Label Grid.Column="3"
                                            Text="{Binding Subtotal, StringFormat='Giá tiền: {0:N0} đ'}"
                                            TextColor="Maroon"
                                            FontSize="14"
@@ -190,65 +246,66 @@
                                            HorizontalTextAlignment="End"
                                            VerticalOptions="Center" />
 
-                                    <!-- Nút Xoá -->
-                                    <Frame Grid.Column="4"
+                                            <!-- Nút Xoá -->
+                                            <Frame Grid.Column="4"
                                            CornerRadius="20"
                                            Padding="0"
                                            BackgroundColor="LightGray"
                                            HasShadow="False"
                                            VerticalOptions="Center">
-                                        <Label Text="❌" FontSize="16" TextColor="Red">
-                                            <Label.GestureRecognizers>
-                                                <TapGestureRecognizer
+                                                <Label Text="❌" FontSize="16" TextColor="Red">
+                                                    <Label.GestureRecognizers>
+                                                        <TapGestureRecognizer
                                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OrderPageViewModel}}, Path=RemoveItemCommand}"
                                                     CommandParameter="{Binding .}" />
-                                            </Label.GestureRecognizers>
-                                          </Label>
-                                    </Frame>
+                                                    </Label.GestureRecognizers>
+                                                </Label>
+                                            </Frame>
+                                        </Grid>
+                                    </StackLayout>
+
+                                    <!-- Gạch phân cách -->
+                                    <BoxView Grid.Row="1" HeightRequest="1" BackgroundColor="#CCC" />
                                 </Grid>
-                          </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
 
-                            <!-- Gạch phân cách -->
-                            <BoxView Grid.Row="1" HeightRequest="1" BackgroundColor="#CCC" />
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-
-            <!-- Chọn mã giảm giá -->
-            <Label Text="Chọn mã giảm giá:"
+                    <!-- Chọn mã giảm giá -->
+                    <Label Text="Chọn mã giảm giá:"
                    FontSize="14"
                    Margin="0,10,0,2" />
-            <Button Text="{Binding SelectedDiscount, Converter={StaticResource DiscountDisplayConverter}}"
-        Command="{Binding ShowDiscountPopupCommand}"
-        BackgroundColor="#6C2DC7"       
-                TextColor="White"
-        FontSize="14"
-        CornerRadius="16"
-        HeightRequest="48"
-        Padding="16,10"
-        HorizontalOptions="Fill">
-                <Button.Shadow>
-                    <Shadow Brush="#44000000" Offset="2,2" Radius="5" Opacity="0.4"/>
-                </Button.Shadow>
-            </Button>
+                    <Button Text="{Binding SelectedDiscount, Converter={StaticResource DiscountDisplayConverter}}"
+                    Command="{Binding ShowDiscountPopupCommand}"
+                    BackgroundColor="#6C2DC7"
+                    TextColor="White"
+                    FontSize="14"
+                    CornerRadius="16"
+                    HeightRequest="48"
+                    Padding="16,10"
+                    HorizontalOptions="Fill">
+                        <Button.Shadow>
+                            <Shadow Brush="#44000000" Offset="2,2" Radius="5" Opacity="0.4"/>
+                        </Button.Shadow>
+                    </Button>
 
-
-            <Label Text="{Binding DiscountAmountFormatted}"
+                    <Label Text="{Binding DiscountAmountFormatted}"
                    TextColor="Red"
                    FontSize="14"
                    Margin="0,5,0,0"
                    HorizontalOptions="End" />
+                </VerticalStackLayout>
+            </ScrollView>
 
             <!-- Tổng tiền -->
-            <BoxView HeightRequest="1" Color="Gray" Margin="0,10"/>
-            <Grid Padding="10" BackgroundColor="#21498c">
+            <Grid Grid.Row="2" Padding="10" BackgroundColor="#21498c">
                 <Label Text="{Binding TotalPriceFormatted, StringFormat='Thanh Toán: {0}'}"
-                       TextColor="White"
-                       FontSize="20"
-                       FontAttributes="Bold"
-                       HorizontalOptions="Center"/>
+               TextColor="White"
+               FontSize="20"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"/>
             </Grid>
-        </StackLayout>
+        </Grid>
+
     </Grid>
 </ContentView>

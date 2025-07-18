@@ -19,6 +19,8 @@
             <converter:DiscountSelectedColorConverter x:Key="DiscountSelectedColorConverter" />
             <converter:GuidNotEmptyConverter x:Key="GuidNotEmptyConverter" />
             <converter:DiscountDisplayConverter x:Key="DiscountDisplayConverter" />
+            <converter:BoolToOpacityConverter x:Key="BoolToOpacityConverter" />
+            <converter:InverseBoolConverter x:Key="InverseBoolConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

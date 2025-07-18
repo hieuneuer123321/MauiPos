@@ -34,6 +34,8 @@ namespace MauiAppUIDemo.Models
         public int Price => ProductPrice;
         public string StatusText => ProductStatus ? "Còn bán" : "Tạm ngừng";
         public Color StatusColor => ProductStatus ? Colors.Green : Colors.Gray;
+        // Property để binding trực tiếp vào Image
+        public ImageSource ImageSource { get; set; }
     }
 
     public class Category

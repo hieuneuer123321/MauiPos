@@ -58,7 +58,10 @@ public partial class LoginViewModel : ObservableObject
                 _authService.SetToken(result.Data.AccessToken);
                 await _apiService.InitializeTokenAsync();            // ✅ Đồng bộ lại _accessToken từ TokenStorage
 
-                // Điều hướng sang MainPage
+                // ✅ Đặt AppShell làm MainPage TRƯỚC
+                Application.Current.MainPage = new AppShell();
+
+                // ✅ Bây giờ Shell.Current mới không null
                 await Shell.Current.GoToAsync("//MainPage");
 
             }

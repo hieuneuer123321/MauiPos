@@ -22,4 +22,5 @@ public partial class ProductListView : ContentView
         // Dữ liệu mẫu với ảnh có sẵn trong MAUI
 
     }
+
 }
