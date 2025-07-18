@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiAppUIDemo.Models;
+using MauiAppUIDemo.Services;
 using MauiAppUIDemo.Views;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -53,7 +54,15 @@ public partial class MainViewModel : ObservableObject
 
     public MainViewModel()
     {
-        UserName = "👤 Admin";
+        var user = UserSessionService.GetUser<UserInfo>();
+        if (user != null)
+        {
+            UserName = $"👤 {user.Email} ({user.Role?.RoleName})";
+        }
+        else
+        {
+            UserName = "👤 Unknown";
+        }
         foreach (var item in MenuItems)
         {
             if (item.SubMenuItems != null)
@@ -65,8 +74,11 @@ public partial class MainViewModel : ObservableObject
             }
         }
 
-        SelectedMenuItem = MenuItems[0];
-        CurrentView = Activator.CreateInstance(SelectedMenuItem.TargetViewType) as View;
+        SelectedMenuItem = MenuItems?.FirstOrDefault();
+        if (SelectedMenuItem?.TargetViewType != null)
+        {
+            CurrentView = Activator.CreateInstance(SelectedMenuItem.TargetViewType) as View;
+        }
     }
 
     [RelayCommand]

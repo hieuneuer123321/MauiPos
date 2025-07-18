@@ -26,6 +26,7 @@ namespace MauiAppUIDemo.Services
         public async Task InitializeTokenAsync()
         {
             _accessToken = await TokenStorage.GetAccessTokenAsync();
+            Console.WriteLine("🔑 Init token: " + _accessToken); // 👈 log ở đây
         }
 
         private async Task EnsureTokenValidAsync()
@@ -40,8 +41,10 @@ namespace MauiAppUIDemo.Services
 
                 try
                 {
-                    var payload = new { refreshToken };
-                    var response = await PostAsync<LoginResponse>("api/auth/refresh", payload, requireAuth: false);
+                    var payload = new {
+                        refreshToken = refreshToken
+                    };
+                    var response = await PostAsync<LoginResponse>("Authorization/ReloadByRefreshToken", payload, requireAuth: false);
 
                     if (response.Succeeded)
                     {
@@ -71,6 +74,7 @@ namespace MauiAppUIDemo.Services
 
             try
             {
+
                 var json = JsonSerializer.Serialize(data);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 

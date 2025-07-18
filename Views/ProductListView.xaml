@@ -36,18 +36,18 @@
 
                 <!-- Picker bọc trong Frame -->
                 <Frame Grid.Column="1"
-           Padding="0"
-           CornerRadius="20"
-           BorderColor="#ccc"
-           HasShadow="False"
-           HeightRequest="40"
-           VerticalOptions="Center">
-                    <Picker Title="Tất cả"
-                ItemsSource="{Binding Categories}"
-                SelectedItem="{Binding SelectedCategory}"
-                WidthRequest="140"
-                FontSize="14"
-                Margin="10,0" />
+                       Padding="0"
+                       CornerRadius="20"
+                       BorderColor="#ccc"
+                       HasShadow="False"
+                       HeightRequest="40"
+                       VerticalOptions="Center">
+                    <Picker Title="Tất cả         🔽"
+                        ItemsSource="{Binding Categories}"
+                        SelectedItem="{Binding SelectedCategory}"
+                        WidthRequest="140"
+                        FontSize="14"
+                        Margin="10,0" />
                 </Frame>
 
             </Grid>

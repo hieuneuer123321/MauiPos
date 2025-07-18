@@ -42,12 +42,12 @@ ColumnDefinitions="*,Auto">
                    VerticalOptions="Center"
                    HorizontalOptions="End">
                 <Label Text="{Binding UserName}"
-     FontSize="14"
+     FontSize="16"
      TextColor="#666666"
      VerticalOptions="Center" />
 
                 <Button Text="Đăng xuất"
-      FontSize="13"
+      FontSize="15"
       Padding="8"
       BackgroundColor="#e53935"
       TextColor="White"

@@ -116,6 +116,7 @@
             <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
+            <inheritdoc/>
         </member>
         <member name="P:MauiAppUIDemo.ViewModels.OrderPageViewModel.SelectedDiscount">
             <inheritdoc cref="F:MauiAppUIDemo.ViewModels.OrderPageViewModel.selectedDiscount"/>
@@ -131,6 +132,9 @@
         </member>
         <member name="P:MauiAppUIDemo.ViewModels.OrderPageViewModel.TotalPriceFormatted">
             <inheritdoc cref="F:MauiAppUIDemo.ViewModels.OrderPageViewModel.totalPriceFormatted"/>
+        </member>
+        <member name="P:MauiAppUIDemo.ViewModels.OrderPageViewModel.IsLoading">
+            <inheritdoc cref="F:MauiAppUIDemo.ViewModels.OrderPageViewModel.isLoading"/>
         </member>
         <member name="M:MauiAppUIDemo.ViewModels.OrderPageViewModel.OnSelectedDiscountChanged(MauiAppUIDemo.Models.DiscountCode)">
             <summary>Executes the logic for when <see cref="P:MauiAppUIDemo.ViewModels.OrderPageViewModel.SelectedDiscount"/> just changed.</summary>
@@ -176,6 +180,12 @@
         </member>
         <member name="P:MauiAppUIDemo.ViewModels.OrderPageViewModel.ShowDiscountPopupCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:MauiAppUIDemo.ViewModels.OrderPageViewModel.ShowDiscountPopupAsync"/>.</summary>
+        </member>
+        <member name="F:MauiAppUIDemo.ViewModels.OrderPageViewModel.loadProductsCommand">
+            <summary>The backing field for <see cref="P:MauiAppUIDemo.ViewModels.OrderPageViewModel.LoadProductsCommand"/>.</summary>
+        </member>
+        <member name="P:MauiAppUIDemo.ViewModels.OrderPageViewModel.LoadProductsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:MauiAppUIDemo.ViewModels.OrderPageViewModel.LoadProductsAsync"/>.</summary>
         </member>
         <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Button.TextColorTo(Microsoft.Maui.Controls.Button,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
             <summary>
@@ -372,6 +382,9 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TotalPriceFormatted">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TotalPriceFormatted" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsLoading">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsLoading" generated properties.</summary>
+        </member>
         <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs">
             <summary>
             A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instances
@@ -446,6 +459,9 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TotalPriceFormatted">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TotalPriceFormatted" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsLoading">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsLoading" generated properties.</summary>
         </member>
     </members>
 </doc>

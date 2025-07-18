@@ -2,6 +2,8 @@
 using CommunityToolkit.Maui;
 using MauiAppUIDemo.Services;
 using MauiAppUIDemo.ViewModels;
+using MauiAppUIDemo.Views;
+using MauiAppUIDemo.Helopper;
 namespace MauiAppUIDemo
 {
     public static class MauiProgram
@@ -23,11 +25,20 @@ namespace MauiAppUIDemo
             builder.Services.AddSingleton<IAuthService, AuthService>();
             builder.Services.AddTransient<LoginViewModel>();
             builder.Services.AddSingleton<LoginPage>();
-#if DEBUG
-            builder.Logging.AddDebug();
-#endif
+            builder.Services.AddTransient<OrderPageViewModel>();
+            builder.Services.AddSingleton<IProductService, ProductService>();
+            builder.Services.AddSingleton<AppShell>();
 
-            return builder.Build();
+
+            // Sau khi builder.Build() xong
+            var app = builder.Build();
+            ServiceHelper.Services = app.Services;
+            return app;
+//#if DEBUG
+//            builder.Logging.AddDebug();
+//#endif
+
+//            return builder.Build();
         }
     }
 }

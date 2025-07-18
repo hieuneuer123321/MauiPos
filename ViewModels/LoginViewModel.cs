@@ -8,10 +8,12 @@ namespace MauiAppUIDemo.ViewModels;
 public partial class LoginViewModel : ObservableObject
 {
     private readonly IAuthService _authService;
+    private readonly IApiService _apiService;
 
-    public LoginViewModel(IAuthService authService)
+    public LoginViewModel(IAuthService authService, IApiService apiService)
     {
         _authService = authService;
+        _apiService = apiService;
     }
 
     [ObservableProperty]
@@ -42,16 +44,22 @@ public partial class LoginViewModel : ObservableObject
 
             if (result.Succeeded)
             {
-                // ✅ Lưu token an toàn
+                // Lưu token
                 await TokenStorage.SaveTokenAsync(
-                        result.Data.AccessToken,
-                        result.Data.RefreshToken,
-                        result.Data.ExpiresIn
-                    );
+                    result.Data.AccessToken,
+                    result.Data.RefreshToken,
+                    result.Data.ExpiresIn
+                );
 
-                // ✅ Gắn vào ApiService
-                _authService.SetToken(result.Data.AccessToken); // hoặc gọi ApiService.Instance.SetAccessToken(...)
-                Application.Current.MainPage = new AppShell();
+                // ✅ Lưu user info
+                await UserSessionService.SaveUserAsync(result.Data.User);
+
+                // Gán token vào ApiService nếu cần
+                _authService.SetToken(result.Data.AccessToken);
+                await _apiService.InitializeTokenAsync();            // ✅ Đồng bộ lại _accessToken từ TokenStorage
+
+                // Điều hướng sang MainPage
+                await Shell.Current.GoToAsync("//MainPage");
 
             }
             else

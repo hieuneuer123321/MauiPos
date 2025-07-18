@@ -5,28 +5,31 @@ namespace MauiAppUIDemo
 {
     public partial class App : Application
     {
-        public App()
+        public App(IServiceProvider serviceProvider)
         {
             InitializeComponent();
-            MainPage = new LoadingPage(); // gán ngay
-            InitRootPage(); // xử lý sau
+            MainPage = new LoadingPage(); // màn hình đợi
+            InitRootPage(serviceProvider);
         }
 
-        private async void InitRootPage()
+        private async void InitRootPage(IServiceProvider services)
         {
+            var api = services.GetRequiredService<IApiService>();
             var token = await TokenStorage.GetAccessTokenAsync();
 
             if (!string.IsNullOrEmpty(token))
             {
-                AppServices.ApiService.SetAccessToken(token);
-                MainPage = new AppShell(); // vào Main
+                api.SetAccessToken(token);
+                MainPage = services.GetRequiredService<AppShell>(); // phải đăng ký AppShell nếu dùng DI
             }
             else
             {
-                MainPage = new NavigationPage(new LoginPage(new LoginViewModel(AppServices.AuthService)));
+                var loginPage = services.GetRequiredService<LoginPage>();
+                MainPage = new NavigationPage(loginPage);
             }
         }
     }
+
 }
 
 
