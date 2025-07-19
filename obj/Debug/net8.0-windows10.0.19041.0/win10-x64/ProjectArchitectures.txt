@@ -1,1 +1,0 @@
-C:\Users\vit002\Desktop\MauiAppUIPOS\MauiAppUIDemo\MauiAppUIDemo.csproj;x64

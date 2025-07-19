@@ -44,27 +44,23 @@ public partial class LoginViewModel : ObservableObject
 
             if (result.Succeeded)
             {
-                // Lưu token
                 await TokenStorage.SaveTokenAsync(
                     result.Data.AccessToken,
                     result.Data.RefreshToken,
                     result.Data.ExpiresIn
                 );
 
-                // ✅ Lưu user info
                 await UserSessionService.SaveUserAsync(result.Data.User);
 
-                // Gán token vào ApiService nếu cần
                 _authService.SetToken(result.Data.AccessToken);
-                await _apiService.InitializeTokenAsync();            // ✅ Đồng bộ lại _accessToken từ TokenStorage
+                await _apiService.InitializeTokenAsync();
 
-                // ✅ Đặt AppShell làm MainPage TRƯỚC
-                Application.Current.MainPage = new AppShell();
+                var shell = ((App)App.Current).Services.GetService<AppShell>();
+                Application.Current.MainPage = shell;
 
-                // ✅ Bây giờ Shell.Current mới không null
                 await Shell.Current.GoToAsync("//MainPage");
-
             }
+
             else
             {
                 IsError = true;

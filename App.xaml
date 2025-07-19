@@ -21,6 +21,7 @@
             <converter:DiscountDisplayConverter x:Key="DiscountDisplayConverter" />
             <converter:BoolToOpacityConverter x:Key="BoolToOpacityConverter" />
             <converter:InverseBoolConverter x:Key="InverseBoolConverter" />
+            <converter:CategoryBoldConverter x:Key="CategoryBoldConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

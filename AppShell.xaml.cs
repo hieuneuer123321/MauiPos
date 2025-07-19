@@ -4,34 +4,37 @@ namespace MauiAppUIDemo
 {
     public partial class AppShell : Shell
     {
-        public AppShell()
+        private readonly IApiService _apiService;
+
+        public AppShell(IApiService apiService)
         {
             InitializeComponent();
 
+            _apiService = apiService;
+
             Routing.RegisterRoute("MainPage", typeof(MainPage));
             Routing.RegisterRoute("LoginPage", typeof(LoginPage));
-
-            // Điều hướng dựa theo token ngay
-            Task.Run(InitNavigationAsync);
         }
 
-        private async Task InitNavigationAsync()
+        public async Task InitNavigationAsync()
         {
-            await Task.Delay(100); // ⏱ Chờ UI ổn định 1 chút
+            await Task.Delay(100);
 
             var token = await TokenStorage.GetAccessTokenAsync();
 
             if (!string.IsNullOrEmpty(token))
             {
-                new ApiService().SetAccessToken(token);
-                await MainThread.InvokeOnMainThreadAsync(() => GoToAsync("//MainPage"));
+                _apiService.SetAccessToken(token);
+                await Shell.Current.GoToAsync("//MainPage");
             }
             else
             {
-                await MainThread.InvokeOnMainThreadAsync(() => GoToAsync("//LoginPage"));
+                await Shell.Current.GoToAsync("//LoginPage");
             }
         }
     }
 
-
 }
+
+
+

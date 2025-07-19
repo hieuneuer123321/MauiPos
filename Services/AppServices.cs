@@ -8,7 +8,7 @@ namespace MauiAppUIDemo.Services
 {
     public static class AppServices
     {
-        public static IApiService ApiService { get; } = new ApiService();
-        public static IAuthService AuthService { get; } = new AuthService(ApiService);
+       // public static IApiService ApiService { get; } = new ApiService();
+     //   public static IAuthService AuthService { get; } = new AuthService(ApiService);
     }
 }

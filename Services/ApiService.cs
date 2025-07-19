@@ -5,6 +5,7 @@ using MauiAppUIDemo.Platforms.Android;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using System.Net;
 
 namespace MauiAppUIDemo.Services
 {
@@ -13,14 +14,16 @@ namespace MauiAppUIDemo.Services
         private readonly HttpClient _httpClient;
         private string _accessToken;
 
-        public ApiService()
+        public ApiService(HttpClient httpClient)
         {
-        #if ANDROID
-                    _httpClient = new HttpClient(new CustomAndroidHttpHandler());
-        #else
+#if ANDROID
+            _httpClient = httpClient;
+            _httpClient = new HttpClient(new CustomAndroidHttpHandler());
+#else
             _httpClient = new HttpClient();
-        #endif
+#endif
 
+            _httpClient = httpClient;
             _httpClient.BaseAddress = new Uri("http://apipos.somee.com/"); // 👈 Sửa base URL của bạn nếu cần
         }
 
@@ -74,71 +77,104 @@ namespace MauiAppUIDemo.Services
             }
         }
 
+        //public async Task<T> PostAsync<T>(string url, object data, bool requireAuth = false)
+        //{
+        //    if (requireAuth)
+        //        await EnsureTokenValidAsync();
+
+        //    try
+        //    {
+
+        //        var json = JsonSerializer.Serialize(data);
+        //        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        //        var request = new HttpRequestMessage(HttpMethod.Post, url)
+        //        {
+        //            Content = content
+        //        };
+
+        //        if (requireAuth && !string.IsNullOrEmpty(_accessToken))
+        //        {
+        //            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+        //        }
+
+        //        var response = await _httpClient.SendAsync(request);
+        //        response.EnsureSuccessStatusCode();
+
+        //        var responseJson = await response.Content.ReadAsStringAsync();
+        //        return JsonSerializer.Deserialize<T>(responseJson, new JsonSerializerOptions
+        //        {
+        //            PropertyNameCaseInsensitive = true
+        //        });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine("❌ API POST Error: " + ex.Message);
+        //        throw;
+        //    }
+        //}
+
+        //public async Task<T> GetAsync<T>(string url, bool requireAuth = false)
+        //{
+        //    if (requireAuth)
+        //        await EnsureTokenValidAsync();
+
+        //    try
+        //    {
+        //        var request = new HttpRequestMessage(HttpMethod.Get, url);
+
+        //        if (requireAuth && !string.IsNullOrEmpty(_accessToken))
+        //        {
+        //            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+        //        }
+
+        //        var response = await _httpClient.SendAsync(request);
+        //        response.EnsureSuccessStatusCode();
+
+        //        var responseJson = await response.Content.ReadAsStringAsync();
+        //        return JsonSerializer.Deserialize<T>(responseJson, new JsonSerializerOptions
+        //        {
+        //            PropertyNameCaseInsensitive = true
+        //        });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine("❌ API GET Error: " + ex.Message);
+        //        throw;
+        //    }
+        //}
         public async Task<T> PostAsync<T>(string url, object data, bool requireAuth = false)
         {
-            if (requireAuth)
-                await EnsureTokenValidAsync();
+            var json = JsonSerializer.Serialize(data);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            try
+            var request = new HttpRequestMessage(HttpMethod.Post, url)
             {
+                Content = content
+            };
 
-                var json = JsonSerializer.Serialize(data);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.SendAsync(request);
+            response.EnsureSuccessStatusCode();
 
-                var request = new HttpRequestMessage(HttpMethod.Post, url)
-                {
-                    Content = content
-                };
-
-                if (requireAuth && !string.IsNullOrEmpty(_accessToken))
-                {
-                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
-                }
-
-                var response = await _httpClient.SendAsync(request);
-                response.EnsureSuccessStatusCode();
-
-                var responseJson = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<T>(responseJson, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
-            }
-            catch (Exception ex)
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<T>(jsonResponse, new JsonSerializerOptions
             {
-                Console.WriteLine("❌ API POST Error: " + ex.Message);
-                throw;
-            }
+                PropertyNameCaseInsensitive = true
+            });
         }
 
         public async Task<T> GetAsync<T>(string url, bool requireAuth = false)
         {
-            if (requireAuth)
-                await EnsureTokenValidAsync();
+            var response = await _httpClient.GetAsync(url);
+            response.EnsureSuccessStatusCode();
 
-            try
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<T>(jsonResponse, new JsonSerializerOptions
             {
-                var request = new HttpRequestMessage(HttpMethod.Get, url);
-
-                if (requireAuth && !string.IsNullOrEmpty(_accessToken))
-                {
-                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
-                }
-
-                var response = await _httpClient.SendAsync(request);
-                response.EnsureSuccessStatusCode();
-
-                var responseJson = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<T>(responseJson, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("❌ API GET Error: " + ex.Message);
-                throw;
-            }
+                PropertyNameCaseInsensitive = true
+            });
         }
+
+
     }
 }

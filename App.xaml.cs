@@ -1,14 +1,20 @@
 ﻿using MauiAppUIDemo.Services;
 using MauiAppUIDemo.ViewModels;
+using Microsoft.Maui.Controls;
 
 namespace MauiAppUIDemo
 {
     public partial class App : Application
     {
+        public IServiceProvider Services { get; }
+
         public App(IServiceProvider serviceProvider)
         {
             InitializeComponent();
-            MainPage = new LoadingPage(); // màn hình đợi
+            Services = serviceProvider;
+
+            MainPage = new LoadingPage(); // Có thể đổi thành splash UI tạm
+
             InitRootPage(serviceProvider);
         }
 
@@ -20,7 +26,14 @@ namespace MauiAppUIDemo
             if (!string.IsNullOrEmpty(token))
             {
                 api.SetAccessToken(token);
-                MainPage = services.GetRequiredService<AppShell>(); // phải đăng ký AppShell nếu dùng DI
+                var shell = Services.GetRequiredService<AppShell>();
+                MainPage = shell;
+
+                // ✅ Sau khi MainPage đã được gán, Shell.Current mới hoạt động
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await shell.InitNavigationAsync();
+                });
             }
             else
             {
@@ -29,6 +42,7 @@ namespace MauiAppUIDemo
             }
         }
     }
+
 
 }
 

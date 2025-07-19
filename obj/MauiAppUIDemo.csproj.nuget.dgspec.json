@@ -69,11 +69,15 @@
           "dependencies": {
             "CommunityToolkit.Maui": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.2.0, )"
             },
             "CommunityToolkit.Mvvm": {
               "target": "Package",
               "version": "[8.4.0, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[9.0.7, )"
             },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
@@ -142,11 +146,15 @@
           "dependencies": {
             "CommunityToolkit.Maui": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.2.0, )"
             },
             "CommunityToolkit.Mvvm": {
               "target": "Package",
               "version": "[8.4.0, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[9.0.7, )"
             },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
@@ -203,11 +211,15 @@
           "dependencies": {
             "CommunityToolkit.Maui": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.2.0, )"
             },
             "CommunityToolkit.Mvvm": {
               "target": "Package",
               "version": "[8.4.0, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[9.0.7, )"
             },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
@@ -265,11 +277,15 @@
           "dependencies": {
             "CommunityToolkit.Maui": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.2.0, )"
             },
             "CommunityToolkit.Mvvm": {
               "target": "Package",
               "version": "[8.4.0, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[9.0.7, )"
             },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
